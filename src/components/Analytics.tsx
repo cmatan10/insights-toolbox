@@ -3,33 +3,34 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recha
 
 type TimeRange = "daily" | "weekly" | "monthly";
 
+// Mock data for chat interactions
 const generateMockData = (range: TimeRange) => {
   switch (range) {
     case "daily":
       return [
-        { name: "00:00", value: 4 },
-        { name: "04:00", value: 3 },
-        { name: "08:00", value: 7 },
-        { name: "12:00", value: 12 },
-        { name: "16:00", value: 9 },
-        { name: "20:00", value: 6 },
+        { name: "00:00", interactions: 14 },
+        { name: "04:00", interactions: 23 },
+        { name: "08:00", interactions: 47 },
+        { name: "12:00", interactions: 52 },
+        { name: "16:00", interactions: 39 },
+        { name: "20:00", interactions: 26 },
       ];
     case "weekly":
       return [
-        { name: "Mon", value: 12 },
-        { name: "Tue", value: 19 },
-        { name: "Wed", value: 3 },
-        { name: "Thu", value: 5 },
-        { name: "Fri", value: 2 },
-        { name: "Sat", value: 3 },
-        { name: "Sun", value: 9 },
+        { name: "Mon", interactions: 82 },
+        { name: "Tue", interactions: 99 },
+        { name: "Wed", interactions: 73 },
+        { name: "Thu", interactions: 85 },
+        { name: "Fri", interactions: 92 },
+        { name: "Sat", interactions: 43 },
+        { name: "Sun", interactions: 49 },
       ];
     case "monthly":
       return [
-        { name: "Week 1", value: 45 },
-        { name: "Week 2", value: 52 },
-        { name: "Week 3", value: 49 },
-        { name: "Week 4", value: 63 },
+        { name: "Week 1", interactions: 345 },
+        { name: "Week 2", interactions: 452 },
+        { name: "Week 3", interactions: 449 },
+        { name: "Week 4", interactions: 563 },
       ];
   }
 };
@@ -37,6 +38,10 @@ const generateMockData = (range: TimeRange) => {
 const Analytics = () => {
   const [timeRange, setTimeRange] = useState<TimeRange>("weekly");
   const data = generateMockData(timeRange);
+
+  // Mock data for counters
+  const resolvedWithoutHuman = 1234;
+  const scheduledMeetings = 567;
 
   return (
     <div className="glass-card rounded-lg p-6 animate-fadeIn">
@@ -58,6 +63,20 @@ const Analytics = () => {
           ))}
         </div>
       </div>
+
+      {/* Counters Row */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm">
+          <div className="text-sm text-gray-500 mb-1">Resolved Without Human</div>
+          <div className="text-2xl font-semibold text-[#05baff]">{resolvedWithoutHuman}</div>
+        </div>
+        <div className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm">
+          <div className="text-sm text-gray-500 mb-1">Scheduled Meetings</div>
+          <div className="text-2xl font-semibold text-[#05baff]">{scheduledMeetings}</div>
+        </div>
+      </div>
+
+      {/* Chart */}
       <div className="h-64">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data}>
@@ -84,7 +103,7 @@ const Analytics = () => {
               }}
             />
             <Bar
-              dataKey="value"
+              dataKey="interactions"
               fill="#05baff"
               radius={[4, 4, 0, 0]}
             />
