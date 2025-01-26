@@ -10,15 +10,15 @@ const Index = () => {
       <Navigation />
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <div className="md:col-span-2">
-            <Analytics />
-          </div>
           <div>
             <PdfUpload />
           </div>
           <div>
             <Calendar />
           </div>
+        </div>
+        <div className="mt-6">
+          <Analytics />
         </div>
       </main>
       <SupportWidget />
