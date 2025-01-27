@@ -108,6 +108,8 @@ const Analytics = () => {
                   borderRadius: "0.5rem",
                   boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                 }}
+                formatter={(value) => [`${value} אינטראקציות`]}
+                labelFormatter={(label) => `${label}`}
               />
               <Bar
                 dataKey="interactions"

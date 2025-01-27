@@ -53,7 +53,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
+    <div className="glass-card rounded-lg p-6 animate-fadeIn max-w-md mx-auto" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold">לוח שנה חודשי</h2>
         <button 
@@ -65,13 +65,15 @@ const Calendar = () => {
       </div>
 
       <div className="space-y-6">
-        <CalendarUI
-          mode="single"
-          selected={date}
-          onSelect={handleSelect}
-          className="rounded-md border w-full"
-          locale={he}
-        />
+        <div className="flex justify-center">
+          <CalendarUI
+            mode="single"
+            selected={date}
+            onSelect={handleSelect}
+            className="rounded-md border mx-auto"
+            locale={he}
+          />
+        </div>
 
         <div className="mt-6">
           <h3 className="text-lg font-medium mb-4">

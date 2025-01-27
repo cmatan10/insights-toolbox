@@ -12,14 +12,14 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { icon: User, label: "User", path: "/user" },
-    { icon: CreditCard, label: "Payments", path: "/payments" },
-    { icon: BarChart2, label: "Reports", path: "/reports" },
-    { icon: HelpCircle, label: "About", path: "/about" },
+    { icon: User, label: "משתמש", path: "/user" },
+    { icon: CreditCard, label: "תשלומים", path: "/payments" },
+    { icon: BarChart2, label: "דוחות", path: "/reports" },
+    { icon: HelpCircle, label: "אודות", path: "/about" },
   ];
 
   const aiTools = [
-    { id: "chatbot", name: "AI Chatbot", description: "Intelligent chat assistant" },
+    { id: "chatbot", name: "צ'אטבוט AI", description: "עוזר צ'אט חכם" },
   ];
 
   return (
@@ -28,7 +28,7 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <span className="text-xl font-semibold bg-gradient-to-r from-[#05baff] to-[#05baff]/80 bg-clip-text text-transparent">
-              AI Dashboard
+              לוח בקרה AI
             </span>
           </div>
 
@@ -37,7 +37,7 @@ const Navigation = () => {
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center space-x-2 text-gray-600 hover:text-[#05baff] transition-colors duration-200">
                 <Bot className="w-5 h-5" />
-                <span>AI Tools</span>
+                <span>כלי AI</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56 bg-white">
                 {aiTools.map((tool) => (
@@ -81,7 +81,7 @@ const Navigation = () => {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <div className="flex items-center space-x-2 px-3 py-2 rounded-md text-gray-600 hover:text-[#05baff] hover:bg-gray-50">
               <Bot className="w-5 h-5" />
-              <span>AI Tools</span>
+              <span>כלי AI</span>
             </div>
             {navItems.map((item) => (
               <Link
