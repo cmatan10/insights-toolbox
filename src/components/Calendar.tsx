@@ -3,7 +3,6 @@ import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 
-// Mock data - replace with actual Google Calendar data when API is integrated
 const meetings = [
   {
     id: 1,
@@ -52,7 +51,7 @@ const Calendar = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
+    <div className="glass-card rounded-lg p-6 animate-fadeIn h-full" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold">לוח שנה חודשי</h2>
         <button 
@@ -69,6 +68,20 @@ const Calendar = () => {
           selected={date}
           onSelect={handleSelect}
           className="rounded-md border w-full"
+          locale="he"
+          classNames={{
+            head_cell: "text-right font-medium",
+            cell: "text-right h-9 w-9 text-center p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+            day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
+            day_selected: "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+            day_today: "bg-accent text-accent-foreground",
+            day_outside: "text-muted-foreground opacity-50",
+            day_disabled: "text-muted-foreground opacity-50",
+            day_range_middle: "aria-selected:bg-accent aria-selected:text-accent-foreground",
+            day_hidden: "invisible",
+            nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+            table: "w-full border-collapse space-y-1",
+          }}
         />
 
         <div className="mt-6">
