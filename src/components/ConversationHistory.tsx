@@ -1,5 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+// Mock conversation data - replace with actual data when available
 const conversations = [
   {
     id: 1,
@@ -26,9 +27,9 @@ const conversations = [
 
 const ConversationHistory = () => {
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn h-full" dir="rtl">
+    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
       <h2 className="text-xl font-semibold mb-4">היסטוריית שיחות</h2>
-      <ScrollArea className="h-[calc(100%-2rem)]">
+      <ScrollArea className="h-[400px]">
         <div className="space-y-4">
           {conversations.map((conv) => (
             <div
@@ -41,7 +42,7 @@ const ConversationHistory = () => {
                   {new Date(conv.date).toLocaleString('he-IL')}
                 </span>
               </div>
-              <p className="text-gray-700 text-right">{conv.message}</p>
+              <p className="text-gray-700">{conv.message}</p>
               <div className="mt-2">
                 <span
                   className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${

@@ -14,11 +14,11 @@ const Index = () => {
           <Analytics />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <div className="md:col-span-4 space-y-6">
-            <div className="h-[250px]">
+          <div className="md:col-span-4">
+            <div className="mb-6">
               <PdfUpload />
             </div>
-            <div className="h-[calc(100vh-450px)]">
+            <div>
               <ConversationHistory />
             </div>
           </div>
