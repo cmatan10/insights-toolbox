@@ -27,8 +27,8 @@ const conversations = [
 
 const ConversationHistory = () => {
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
-      <h2 className="text-xl font-semibold mb-4">היסטוריית שיחות</h2>
+    <div className="glass-card rounded-lg p-6 animate-fadeIn w-full" dir="rtl">
+      <h2 className="text-xl font-semibold mb-4 text-right">היסטוריית שיחות</h2>
       <ScrollArea className="h-[400px]">
         <div className="space-y-4">
           {conversations.map((conv) => (
@@ -42,8 +42,8 @@ const ConversationHistory = () => {
                   {new Date(conv.date).toLocaleString('he-IL')}
                 </span>
               </div>
-              <p className="text-gray-700">{conv.message}</p>
-              <div className="mt-2">
+              <p className="text-gray-700 text-right">{conv.message}</p>
+              <div className="mt-2 text-right">
                 <span
                   className={`inline-flex items-center px-2 py-1 rounded-full text-xs ${
                     conv.resolved

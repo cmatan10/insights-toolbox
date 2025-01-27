@@ -14,7 +14,7 @@ const Index = () => {
           <Analytics />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-          <div className="md:col-span-4">
+          <div className="md:col-span-6">
             <div className="mb-6">
               <PdfUpload />
             </div>
@@ -22,7 +22,7 @@ const Index = () => {
               <ConversationHistory />
             </div>
           </div>
-          <div className="md:col-span-8">
+          <div className="md:col-span-6">
             <Calendar />
           </div>
         </div>
