@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { he } from "date-fns/locale";
 
 const meetings = [
   {
@@ -38,8 +39,8 @@ const Calendar = () => {
     if (selectedDate) {
       const filteredMeetings = meetings.filter(
         (meeting) =>
-          format(meeting.date, "yyyy-MM-dd") ===
-          format(selectedDate, "yyyy-MM-dd")
+          format(meeting.date, "yyyy-MM-dd", { locale: he }) ===
+          format(selectedDate, "yyyy-MM-dd", { locale: he })
       );
       setSelectedDayMeetings(filteredMeetings);
     }
@@ -68,7 +69,7 @@ const Calendar = () => {
           selected={date}
           onSelect={handleSelect}
           className="rounded-md border w-full"
-          locale="he"
+          locale={he}
           classNames={{
             head_cell: "text-right font-medium",
             cell: "text-right h-9 w-9 text-center p-0 relative [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
@@ -88,7 +89,7 @@ const Calendar = () => {
           <h3 className="text-lg font-medium mb-4">
             {showAllMeetings 
               ? "כל הפגישות החודשיות" 
-              : `פגישות ל-${date ? format(date, "dd/MM/yyyy") : "היום"}`
+              : `פגישות ל-${date ? format(date, "dd/MM/yyyy", { locale: he }) : "היום"}`
             }
           </h3>
           <div className="space-y-4">
