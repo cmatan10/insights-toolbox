@@ -77,38 +77,41 @@ const Analytics = () => {
       </div>
 
       {/* Chart */}
-      <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            <XAxis
-              dataKey="name"
-              stroke="#94a3b8"
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-            />
-            <YAxis
-              stroke="#94a3b8"
-              fontSize={12}
-              tickLine={false}
-              axisLine={false}
-              tickFormatter={(value) => `${value}`}
-            />
-            <Tooltip
-              contentStyle={{
-                background: "white",
-                border: "1px solid #e2e8f0",
-                borderRadius: "0.5rem",
-                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-              }}
-            />
-            <Bar
-              dataKey="interactions"
-              fill="#05baff"
-              radius={[4, 4, 0, 0]}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+      <div>
+        <h3 className="text-lg font-medium mb-4">User Chat Interactions</h3>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={data}>
+              <XAxis
+                dataKey="name"
+                stroke="#94a3b8"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
+                stroke="#94a3b8"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={(value) => `${value}`}
+              />
+              <Tooltip
+                contentStyle={{
+                  background: "white",
+                  border: "1px solid #e2e8f0",
+                  borderRadius: "0.5rem",
+                  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                }}
+              />
+              <Bar
+                dataKey="interactions"
+                fill="#05baff"
+                radius={[4, 4, 0, 0]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
