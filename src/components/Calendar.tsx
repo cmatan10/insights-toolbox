@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { he } from 'date-fns/locale';
 
 // Mock data - replace with actual Google Calendar data when API is integrated
 const meetings = [
@@ -39,8 +40,8 @@ const Calendar = () => {
     if (selectedDate) {
       const filteredMeetings = meetings.filter(
         (meeting) =>
-          format(meeting.date, "yyyy-MM-dd") ===
-          format(selectedDate, "yyyy-MM-dd")
+          format(meeting.date, "yyyy-MM-dd", { locale: he }) ===
+          format(selectedDate, "yyyy-MM-dd", { locale: he })
       );
       setSelectedDayMeetings(filteredMeetings);
     }
@@ -69,13 +70,14 @@ const Calendar = () => {
           selected={date}
           onSelect={handleSelect}
           className="rounded-md border w-full"
+          locale={he}
         />
 
         <div className="mt-6">
           <h3 className="text-lg font-medium mb-4">
             {showAllMeetings 
               ? "כל הפגישות החודשיות" 
-              : `פגישות ל-${date ? format(date, "dd/MM/yyyy") : "היום"}`
+              : `פגישות ל-${date ? format(date, "dd/MM/yyyy", { locale: he }) : "היום"}`
             }
           </h3>
           <div className="space-y-4">
