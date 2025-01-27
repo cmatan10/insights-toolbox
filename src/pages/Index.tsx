@@ -7,7 +7,7 @@ import ConversationHistory from "@/components/ConversationHistory";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-background/50">
+    <div className="min-h-screen bg-gradient-to-br from-background to-background/50" dir="rtl">
       <Navigation />
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="mb-6">
@@ -15,8 +15,10 @@ const Index = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <div className="md:col-span-4">
-            <PdfUpload />
-            <div className="mt-6">
+            <div className="mb-6">
+              <PdfUpload />
+            </div>
+            <div>
               <ConversationHistory />
             </div>
           </div>

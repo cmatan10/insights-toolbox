@@ -17,20 +17,20 @@ const generateMockData = (range: TimeRange) => {
       ];
     case "weekly":
       return [
-        { name: "Mon", interactions: 82 },
-        { name: "Tue", interactions: 99 },
-        { name: "Wed", interactions: 73 },
-        { name: "Thu", interactions: 85 },
-        { name: "Fri", interactions: 92 },
-        { name: "Sat", interactions: 43 },
-        { name: "Sun", interactions: 49 },
+        { name: "יום ב'", interactions: 82 },
+        { name: "יום ג'", interactions: 99 },
+        { name: "יום ד'", interactions: 73 },
+        { name: "יום ה'", interactions: 85 },
+        { name: "יום ו'", interactions: 92 },
+        { name: "שבת", interactions: 43 },
+        { name: "יום א'", interactions: 49 },
       ];
     case "monthly":
       return [
-        { name: "Week 1", interactions: 345 },
-        { name: "Week 2", interactions: 452 },
-        { name: "Week 3", interactions: 449 },
-        { name: "Week 4", interactions: 563 },
+        { name: "שבוע 1", interactions: 345 },
+        { name: "שבוע 2", interactions: 452 },
+        { name: "שבוע 3", interactions: 449 },
+        { name: "שבוע 4", interactions: 563 },
       ];
   }
 };
@@ -42,12 +42,13 @@ const Analytics = () => {
   // Mock data for counters
   const resolvedWithoutHuman = 1234;
   const scheduledMeetings = 567;
+  const totalInteractions = 2345;
 
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn">
+    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Analytics</h2>
-        <div className="flex space-x-2">
+        <h2 className="text-xl font-semibold">ניתוח נתונים</h2>
+        <div className="flex space-x-2 space-x-reverse">
           {["daily", "weekly", "monthly"].map((range) => (
             <button
               key={range}
@@ -58,27 +59,31 @@ const Analytics = () => {
                   : "text-gray-600 hover:bg-gray-100"
               }`}
             >
-              {range.charAt(0).toUpperCase() + range.slice(1)}
+              {range === "daily" ? "יומי" : range === "weekly" ? "שבועי" : "חודשי"}
             </button>
           ))}
         </div>
       </div>
 
       {/* Counters Row */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm">
-          <div className="text-sm text-gray-500 mb-1">Resolved Without Human</div>
+          <div className="text-sm text-gray-500 mb-1">סה״כ אינטראקציות</div>
+          <div className="text-2xl font-semibold text-[#05baff]">{totalInteractions}</div>
+        </div>
+        <div className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm">
+          <div className="text-sm text-gray-500 mb-1">נפתר ללא מענה אנושי</div>
           <div className="text-2xl font-semibold text-[#05baff]">{resolvedWithoutHuman}</div>
         </div>
         <div className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm">
-          <div className="text-sm text-gray-500 mb-1">Scheduled Meetings</div>
+          <div className="text-sm text-gray-500 mb-1">פגישות שנקבעו</div>
           <div className="text-2xl font-semibold text-[#05baff]">{scheduledMeetings}</div>
         </div>
       </div>
 
       {/* Chart */}
       <div>
-        <h3 className="text-lg font-medium mb-4">User Chat Interactions</h3>
+        <h3 className="text-lg font-medium mb-4">אינטראקציות משתמשים בצ׳אט</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>

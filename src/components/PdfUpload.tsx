@@ -43,11 +43,11 @@ const PdfUpload = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-4 animate-fadeIn">
+    <div className="glass-card rounded-lg p-4 animate-fadeIn" dir="rtl">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Upload PDFs</h2>
+        <h2 className="text-xl font-semibold">העלאת קבצי PDF</h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">Server Status:</span>
+          <span className="text-sm text-gray-600">סטטוס שרת:</span>
           <div
             className={`w-3 h-3 rounded-full ${
               serverStatus === "online"
@@ -61,7 +61,7 @@ const PdfUpload = () => {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors duration-200 ${
+        className={`border-2 border-dashed rounded-lg p-4 text-center transition-colors duration-200 ${
           isDragging
             ? "border-primary bg-primary/5"
             : "border-gray-300 hover:border-primary/50"
@@ -80,20 +80,20 @@ const PdfUpload = () => {
           className="cursor-pointer flex flex-col items-center"
         >
           <Upload
-            className={`w-10 h-10 mb-3 ${
+            className={`w-8 h-8 mb-2 ${
               isDragging ? "text-primary" : "text-gray-400"
             }`}
           />
           <p className="text-base font-medium mb-1">
-            Drag & drop PDFs here or click to browse
+            גרור ושחרר קבצי PDF כאן או לחץ לבחירה
           </p>
-          <p className="text-sm text-gray-500">Supported format: PDF</p>
+          <p className="text-sm text-gray-500">פורמט נתמך: PDF</p>
         </label>
       </div>
 
       {uploadStatus !== "idle" && (
         <div
-          className={`mt-4 p-3 rounded-lg flex items-center space-x-2 animate-fadeIn ${
+          className={`mt-4 p-3 rounded-lg flex items-center space-x-2 space-x-reverse animate-fadeIn ${
             uploadStatus === "success"
               ? "bg-green-50 text-green-700"
               : "bg-red-50 text-red-700"
@@ -102,12 +102,12 @@ const PdfUpload = () => {
           {uploadStatus === "success" ? (
             <>
               <CheckCircle className="w-5 h-5" />
-              <span>Files uploaded successfully!</span>
+              <span>הקבצים הועלו בהצלחה!</span>
             </>
           ) : (
             <>
               <XCircle className="w-5 h-5" />
-              <span>Please upload PDF files only.</span>
+              <span>אנא העלה קבצי PDF בלבד.</span>
             </>
           )}
         </div>
