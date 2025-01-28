@@ -3,8 +3,8 @@ import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon, Clock } from "lucide-react";
 import { he } from 'date-fns/locale';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-// Mock data - replace with actual Google Calendar data when API is integrated
 const meetings = [
   {
     id: 1,
@@ -27,12 +27,22 @@ const meetings = [
     duration: "45 דקות",
     date: addDays(new Date(), 2),
   },
+  {
+    id: 4,
+    title: "פגישת לקוח",
+    time: "15:00",
+    duration: "שעה",
+    date: addDays(new Date(), 2),
+  },
 ];
 
 const Calendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedDayMeetings, setSelectedDayMeetings] = useState(meetings);
   const [showAllMeetings, setShowAllMeetings] = useState(true);
+
+  // לקבל את שם החודש הנוכחי בעברית
+  const currentMonth = format(new Date(), "LLLL", { locale: he });
 
   const handleSelect = (selectedDate: Date | undefined) => {
     setDate(selectedDate);
@@ -53,15 +63,20 @@ const Calendar = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn max-w-md mx-auto" dir="rtl">
+    <div className="glass-card rounded-lg p-6 animate-fadeIn max-w mx-auto" dir="rtl">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl font-semibold">לוח שנה חודשי</h2>
-        <button 
-          onClick={handleCalendarClick}
-          className="text-primary hover:text-primary/80 transition-colors duration-200"
-        >
-          <CalendarIcon className="w-5 h-5" />
-        </button>
+        <div className="relative group">
+          <button 
+            onClick={handleCalendarClick}
+            className="text-primary hover:text-primary/80 transition-colors duration-200"
+          >
+            <CalendarIcon className="w-5 h-5" />
+          </button>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-y-[-10px] transition-all duration-200 bg-white text-[#05baff] text-sm py-1 px-3 rounded-lg shadow-lg">
+            {`כל הפגישות בחודש ${currentMonth}`}
+          </div>
+        </div>
       </div>
 
       <div className="space-y-6">
@@ -78,36 +93,38 @@ const Calendar = () => {
         <div className="mt-6">
           <h3 className="text-lg font-medium mb-4">
             {showAllMeetings 
-              ? "כל הפגישות החודשיות" 
+              ? `כל הפגישות בחודש ${currentMonth}`
               : `פגישות ל-${date ? format(date, "dd/MM/yyyy", { locale: he }) : "היום"}`
             }
           </h3>
-          <div className="space-y-4">
-            {selectedDayMeetings.map((meeting) => (
-              <div
-                key={meeting.id}
-                className="hover-card flex items-center p-4 rounded-lg bg-white border border-gray-200"
-              >
-                <div className="flex-1">
-                  <h3 className="font-medium">{meeting.title}</h3>
-                  <div className="flex items-center text-sm text-gray-500 mt-1">
-                    <Clock className="w-4 h-4 ml-1" />
-                    <span>
-                      {meeting.time} · {meeting.duration}
-                    </span>
+
+          <ScrollArea className="h-[275px]">
+            {selectedDayMeetings.length > 0 ? (
+              selectedDayMeetings.map((meeting) => (
+                <div
+                  key={meeting.id}
+                  className="hover-card flex items-center p-4 rounded-lg bg-white border border-gray-200 mb-4"
+                >
+                  <div className="flex-1">
+                    <h3 className="font-medium">{meeting.title}</h3>
+                    <div className="flex items-center text-sm text-gray-500 mt-1">
+                      <Clock className="w-4 h-4 ml-1" />
+                      <span>
+                        {meeting.time} · {meeting.duration}
+                      </span>
+                    </div>
                   </div>
+                  <button className="px-3 py-1 text-sm text-primary hover:bg-primary/10 rounded-md transition-colors duration-200">
+                    הצטרף
+                  </button>
                 </div>
-                <button className="px-3 py-1 text-sm text-primary hover:bg-primary/10 rounded-md transition-colors duration-200">
-                  הצטרף
-                </button>
-              </div>
-            ))}
-            {selectedDayMeetings.length === 0 && (
+              ))
+            ) : (
               <p className="text-gray-500 text-center py-4">
                 אין פגישות מתוכננות ליום זה
               </p>
             )}
-          </div>
+          </ScrollArea>
         </div>
       </div>
     </div>

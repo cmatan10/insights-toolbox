@@ -17,12 +17,12 @@ const generateMockData = (range: TimeRange) => {
       ];
     case "weekly":
       return [
-        { name: "יום ב'", interactions: 82 },
-        { name: "יום ג'", interactions: 99 },
-        { name: "יום ד'", interactions: 73 },
-        { name: "יום ה'", interactions: 85 },
-        { name: "יום ו'", interactions: 92 },
-        { name: "שבת", interactions: 43 },
+        { name: "יום שבת'", interactions: 82 },
+        { name: "יום ו'", interactions: 99 },
+        { name: "יום ה'", interactions: 73 },
+        { name: "יום ד'", interactions: 85 },
+        { name: "יום ג'", interactions: 92 },
+        { name: "יום ב'", interactions: 43 },
         { name: "יום א'", interactions: 49 },
       ];
     case "monthly":

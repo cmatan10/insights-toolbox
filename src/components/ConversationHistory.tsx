@@ -23,18 +23,25 @@ const conversations = [
     date: "2024-01-27T14:20:00",
     resolved: false,
   },
+  {
+    id: 4,
+    user: "משתמש8589",
+    message: "האם תוכל לעזור?",
+    date: "2024-01-27T14:20:00",
+    resolved: false,
+  },
 ];
 
 const ConversationHistory = () => {
   return (
     <div className="glass-card rounded-lg p-6 animate-fadeIn w-full" dir="rtl">
       <h2 className="text-xl font-semibold mb-4 text-right">היסטוריית שיחות</h2>
-      <ScrollArea className="h-[400px]">
-        <div className="space-y-4">
+      <ScrollArea className="h-[453px]">
+        <div className="space-y-7">
           {conversations.map((conv) => (
             <div
               key={conv.id}
-              className="p-4 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="p-5 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex justify-between items-start mb-2">
                 <span className="font-medium">{conv.user}</span>

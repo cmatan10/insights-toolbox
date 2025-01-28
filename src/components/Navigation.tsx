@@ -12,9 +12,8 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { icon: User, label: "משתמש", path: "/user" },
-    { icon: CreditCard, label: "תשלומים", path: "/payments" },
-    { icon: BarChart2, label: "דוחות", path: "/reports" },
+    // { icon: CreditCard, label: "תשלומים", path: "/payments" },
+    // { icon: BarChart2, label: "דוחות", path: "/reports" },
     { icon: HelpCircle, label: "אודות", path: "/about" },
   ];
 
@@ -23,19 +22,22 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
+    <nav className="top-0 w-full bg-white/80 backdrop-blur-sm border-b border-gray-200 z-50 ">
+  <div className="max-w-[1430px] mx-auto px-2 sm:px-4 lg:px-6">
+  <div className="flex justify-between h-16">
+          
+          {/* הפיכת "משתמש" לקישור לנתיב /user */}
+          <Link to="/user-profile" className="flex items-center">
+            <User className="h-5 mr-2 text-[#05baff]" />
             <span className="text-xl font-semibold bg-gradient-to-r from-[#05baff] to-[#05baff]/80 bg-clip-text text-transparent">
-              לוח בקרה AI
+              משתמש
             </span>
-          </div>
+          </Link>
 
-          {/* Desktop Navigation */}
+          {/* ניווט דסקטופ */}
           <div className="hidden md:flex items-center space-x-8">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-2 text-gray-600 hover:text-[#05baff] transition-colors duration-200">
+              <DropdownMenuTrigger className="flex items-center space-x-2 text-gray-600 hover:text-[#05baff] transition-colors duration-200 ml-8">
                 <Bot className="w-5 h-5" />
                 <span>כלי AI</span>
               </DropdownMenuTrigger>
@@ -63,7 +65,7 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Mobile menu button */}
+          {/* כפתור תפריט במובייל */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -75,7 +77,7 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* ניווט במובייל */}
       {isOpen && (
         <div className="md:hidden animate-fadeIn">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
