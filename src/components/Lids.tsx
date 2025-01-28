@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -46,37 +47,39 @@ const Lids = () => {
         <h2 className="text-xl font-semibold">לידים</h2>
       </div>
       
-      <div className="relative overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-right">שם</TableHead>
-              <TableHead className="text-right">אימייל</TableHead>
-              <TableHead className="text-right">טלפון</TableHead>
-              <TableHead className="w-[50px]"></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {leads.map((lead) => (
-              <TableRow key={lead.id}>
-                <TableCell className="text-right">{lead.name}</TableCell>
-                <TableCell className="text-right">{lead.email}</TableCell>
-                <TableCell className="text-right">{lead.phone}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleDelete(lead.id)}
-                    className="hover:text-red-500"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </TableCell>
+      <ScrollArea className="h-[200px] rounded-md border">
+        <div className="relative">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-right">שם</TableHead>
+                <TableHead className="text-right">אימייל</TableHead>
+                <TableHead className="text-right">טלפון</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {leads.map((lead) => (
+                <TableRow key={lead.id}>
+                  <TableCell className="text-right">{lead.name}</TableCell>
+                  <TableCell className="text-right">{lead.email}</TableCell>
+                  <TableCell className="text-right">{lead.phone}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => handleDelete(lead.id)}
+                      className="hover:text-red-500"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </ScrollArea>
     </div>
   );
 };
