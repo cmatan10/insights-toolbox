@@ -98,12 +98,12 @@ const Calendar = () => {
             }
           </h3>
 
-          <ScrollArea className="h-[275px]">
+          <ScrollArea className="h-[168px]">
             {selectedDayMeetings.length > 0 ? (
               selectedDayMeetings.map((meeting) => (
                 <div
                   key={meeting.id}
-                  className="hover-card flex items-center p-4 rounded-lg bg-white border border-gray-200 mb-4"
+                  className="hover-card flex items-center p-3 rounded-lg bg-white border border-gray-200 mb-4"
                 >
                   <div className="flex-1">
                     <h3 className="font-medium">{meeting.title}</h3>
