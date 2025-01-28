@@ -41,6 +41,12 @@ const initialLeads: Lead[] = [
     email: "yosef@example.com",
     phone: "054-9876543",
   },
+  {
+    id: "4",
+    name: "שרון בלום",
+    email: "sharon@example.com",
+    phone: "052-1231234",
+  },
 ];
 
 const Lids = () => {
@@ -68,15 +74,15 @@ const Lids = () => {
         <h2 className="text-xl font-semibold">לידים</h2>
       </div>
       
-      <ScrollArea className="h-[200px] rounded-md border">
+      <ScrollArea className="h-[265px] rounded-md border">
         <div className="relative">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[50px]"></TableHead>
-                <TableHead className="text-right">שם</TableHead>
                 <TableHead className="text-right">אימייל</TableHead>
                 <TableHead className="text-right">טלפון</TableHead>
+                <TableHead className="text-right">שם</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -92,9 +98,9 @@ const Lids = () => {
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </TableCell>
-                  <TableCell className="text-right">{lead.name}</TableCell>
                   <TableCell className="text-right">{lead.email}</TableCell>
                   <TableCell className="text-right">{lead.phone}</TableCell>
+                  <TableCell className="text-right">{lead.name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
