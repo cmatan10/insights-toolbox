@@ -98,7 +98,7 @@ const Calendar = () => {
             }
           </h3>
 
-          <ScrollArea className="h-[168px]">
+          <ScrollArea className="h-[255px]">
             {selectedDayMeetings.length > 0 ? (
               selectedDayMeetings.map((meeting) => (
                 <div

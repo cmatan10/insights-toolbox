@@ -36,12 +36,12 @@ const ConversationHistory = () => {
   return (
     <div className="glass-card rounded-lg p-6 animate-fadeIn w-full" dir="rtl">
       <h2 className="text-xl font-semibold mb-4 text-right">היסטוריית שיחות</h2>
-      <ScrollArea className="h-[494px]">
+      <ScrollArea className="h-[505px]">
         <div className="space-y-7">
           {conversations.map((conv) => (
             <div
               key={conv.id}
-              className="p-6 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="p-7 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="flex justify-between items-start mb-2">
                 <span className="font-medium">{conv.user}</span>
