@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import PdfUpload from "@/components/PdfUpload";
 import Calendar from "@/components/Calendar";
+import Lids from "@/components/Lids";
 import Analytics from "@/components/Analytics";
 import SupportWidget from "@/components/SupportWidget";
 import ConversationHistory from "@/components/ConversationHistory";
@@ -25,6 +26,9 @@ const Index = () => {
           <div className="md:col-span-6">
             <Calendar />
           </div>
+        </div>
+        <div className="mt-6">
+          <Lids />
         </div>
       </main>
       <SupportWidget />
