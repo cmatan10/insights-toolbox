@@ -1,4 +1,4 @@
-const Meeting = require('../../models/Meeting');
+const Meeting = require('../models/Meeting'); // Ensure this path is correct
 
 exports.getAllMeetings = async (req, res) => {
   try {

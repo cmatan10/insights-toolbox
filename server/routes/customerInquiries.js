@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const meetings = require('../data/meetings');
+const customerInquiries = require('../data/customerInquiries');
 
-// Get all meetings
+// Get all customer inquiries
 router.get('/', (req, res) => {
-  res.json(meetings);
+  res.json(customerInquiries);
 });
 
 module.exports = router;

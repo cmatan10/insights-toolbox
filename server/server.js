@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const customerInquiriesRouter = require('./routes/customerInquiries.js');
-const meetingsRouter = require('./routes/meetingsRoutes.js');
-const personalDetailsRouter = require('./routes/personalDetailsRoutes.js');
-const callHistoryRouter = require('./routes/callHistoryRoutes.js');
-const statisticalDataRouter = require('./routes/statisticalDataRoutes.js');
+const customerInquiriesRouter = require('./routes/customerInquiries'); // Ensure this path is correct
+const meetingsRouter = require('./routes/meetingsRoutes'); // Ensure this path is correct
+const personalDetailsRouter = require('./routes/personalDetailsRoutes'); // Ensure this path is correct
+const callHistoryRouter = require('./routes/callHistoryRoutes'); // Ensure this path is correct
+const statisticalDataRouter = require('./routes/statisticalDataRoutes'); // Ensure this path is correct
 
 const app = express();
 const PORT = process.env.PORT || 5000;
