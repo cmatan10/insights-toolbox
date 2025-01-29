@@ -19,7 +19,9 @@ interface Lead {
   id: string;
   name: string;
   email: string;
-  phone: string;
+  phone: number; // Changed to number type
+  message: string;
+  contactDate: string; // Added contactDate field
 }
 
 const initialLeads: Lead[] = [
@@ -27,25 +29,33 @@ const initialLeads: Lead[] = [
     id: "1",
     name: "ישראל ישראלי",
     email: "israel@example.com",
-    phone: "050-1234567",
+    phone: 501234567, // Changed to number type
+    message: "מעוניין בשירותים שלכם",
+    contactDate: "2023-10-01", // Example contact date
   },
   {
     id: "2",
     name: "שרה כהן",
     email: "sarah@example.com",
-    phone: "052-7654321",
+    phone: 527654321, // Changed to number type
+    message: "שאלה לגבי המוצר",
+    contactDate: "2023-10-02", // Example contact date
   },
   {
     id: "3",
     name: "יוסף לוי",
     email: "yosef@example.com",
-    phone: "054-9876543",
+    phone: 549876543, // Changed to number type
+    message: "מעוניין בהצעת מחיר",
+    contactDate: "2023-10-03", // Example contact date
   },
   {
     id: "4",
     name: "שרון בלום",
     email: "sharon@example.com",
-    phone: "052-1231234",
+    phone: 521231234, // Changed to number type
+    message: "בקשה לפגישה",
+    contactDate: "2023-10-04", // Example contact date
   },
 ];
 
@@ -83,6 +93,8 @@ const Lids = () => {
                 <TableHead className="text-right">אימייל</TableHead>
                 <TableHead className="text-right">טלפון</TableHead>
                 <TableHead className="text-right">שם</TableHead>
+                <TableHead className="text-right">הודעה</TableHead> {/* Added message column */}
+                <TableHead className="text-right">תאריך יצירת קשר</TableHead> {/* Added contact date column */}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -101,6 +113,8 @@ const Lids = () => {
                   <TableCell className="text-right">{lead.email}</TableCell>
                   <TableCell className="text-right">{lead.phone}</TableCell>
                   <TableCell className="text-right">{lead.name}</TableCell>
+                  <TableCell className="text-right">{lead.message}</TableCell> {/* Added message cell */}
+                  <TableCell className="text-right">{lead.contactDate}</TableCell> {/* Added contact date cell */}
                 </TableRow>
               ))}
             </TableBody>

@@ -19,10 +19,10 @@ interface ProfileData {
   profileImage: string;
   username: string;
   contactEmail: string;
-  contactPhone: string;
+  contactPhone: number; // Changed to number
   companyName: string;
   businessEmail: string;
-  businessPhone: string;
+  businessPhone: number; // Changed to number
   companyDescription: string;
   linkedin: string;
   instagram: string;
@@ -39,10 +39,10 @@ const UserProfilePage = () => {
     profileImage: '',
     username: 'משתמש לדוגמה',
     contactEmail: 'user@example.com',
-    contactPhone: '050-1234567',
+    contactPhone: 501234567, // Changed to number
     companyName: 'חברה לדוגמה',
     businessEmail: 'business@example.com',
-    businessPhone: '03-9876543',
+    businessPhone: 39876543, // Changed to number
     companyDescription: 'חברה לדוגמה המתמחה בפתרונות תוכנה מתקדמים',
     linkedin: 'https://linkedin.com/in/example',
     instagram: 'https://instagram.com/example',
@@ -59,10 +59,10 @@ const UserProfilePage = () => {
       profileImage: '',
       username: '',
       contactEmail: '',
-      contactPhone: '',
+      contactPhone: 0, // Changed to number
       companyName: '',
       businessEmail: '',
-      businessPhone: '',
+      businessPhone: 0, // Changed to number
       companyDescription: '',
       linkedin: '',
       instagram: '',
@@ -176,13 +176,14 @@ const UserProfilePage = () => {
                   <div className="flex-1 relative">
                     <Input
                       id={field}
+                      type={field.includes('Phone') ? 'number' : 'text'} // Added type number for phone fields
                       disabled={!isEditing}
                       // placeholder בעת צפייה – הערך הישן
-                      placeholder={!isEditing ? profile[field] : ""}
+                      placeholder={!isEditing ? profile[field].toString() : ""}
                       // value בעת עריכה – מה שהמשתמש מקליד (tempProfile)
                       // בעת צפייה – "" כדי לא להציג ערך כלל (רק placeholder)
-                      value={isEditing ? tempProfile[field] : ""}
-                      onChange={(e) => setTempProfile({ ...tempProfile, [field]: e.target.value })}
+                      value={isEditing ? tempProfile[field].toString() : ""}
+                      onChange={(e) => setTempProfile({ ...tempProfile, [field]: field.includes('Phone') ? Number(e.target.value) : e.target.value })}
                     />
                   </div>
                   {isEditing && <Pencil className="ml-3 text-[#05baff]" />}
@@ -220,10 +221,11 @@ const UserProfilePage = () => {
                     ) : (
                       <Input
                         id={field}
+                        type={field.includes('Phone') ? 'number' : 'text'} // Added type number for phone fields
                         disabled={!isEditing}
-                        placeholder={!isEditing ? profile[field] : ""}
-                        value={isEditing ? tempProfile[field] : ""}
-                        onChange={(e) => setTempProfile({ ...tempProfile, [field]: e.target.value })}
+                        placeholder={!isEditing ? profile[field].toString() : ""}
+                        value={isEditing ? tempProfile[field].toString() : ""}
+                        onChange={(e) => setTempProfile({ ...tempProfile, [field]: field.includes('Phone') ? Number(e.target.value) : e.target.value })}
                       />
                     )}
                   </div>

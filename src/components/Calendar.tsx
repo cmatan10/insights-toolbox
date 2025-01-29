@@ -1,17 +1,27 @@
 import { useState } from "react";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, Users } from "lucide-react"; // Import relevant icon
 import { he } from 'date-fns/locale';
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const meetings = [
+interface Meeting {
+  id: number;
+  title: string;
+  time: string;
+  duration: string;
+  date: Date;
+  participants: string[];
+}
+
+const meetings: Meeting[] = [
   {
     id: 1,
     title: "פגישת צוות",
     time: "10:00",
     duration: "30 דקות",
     date: new Date(),
+    participants: ['ישראל ישראלי', 'שרה כהן'],
   },
   {
     id: 2,
@@ -19,6 +29,7 @@ const meetings = [
     time: "14:00",
     duration: "שעה",
     date: addDays(new Date(), 1),
+    participants: ['יוסף לוי', 'שרון בלום'],
   },
   {
     id: 3,
@@ -26,6 +37,7 @@ const meetings = [
     time: "16:30",
     duration: "45 דקות",
     date: addDays(new Date(), 2),
+    participants: ['דוד כהן', 'רונית לוי'],
   },
   {
     id: 4,
@@ -33,6 +45,7 @@ const meetings = [
     time: "15:00",
     duration: "שעה",
     date: addDays(new Date(), 2),
+    participants: ['מיכאל ישראלי', 'אורית כהן'],
   },
 ];
 
@@ -113,6 +126,10 @@ const Calendar = () => {
                         {meeting.time} · {meeting.duration}
                       </span>
                     </div>
+                  </div>
+                  <div className="flex items-center text-sm text-gray-500 mr-3">
+                    {meeting.participants.join(', ')}
+                    <Users className="ml-2" /> {/* Added icon */}
                   </div>
                   <button className="px-3 py-1 text-sm text-primary hover:bg-primary/10 rounded-md transition-colors duration-200">
                     הצטרף
