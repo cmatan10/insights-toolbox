@@ -4,5 +4,6 @@ const customerInquiriesController = require('../controllers/customerInquiriesCon
 
 router.get('/', customerInquiriesController.getAllInquiries);
 router.post('/', customerInquiriesController.createInquiry);
+router.get('/:id', customerInquiriesController.getInquiryById);
 
 module.exports = router;

@@ -9,6 +9,19 @@ exports.getAllInquiries = async (req, res) => {
   }
 };
 
+exports.getInquiryById = async (req, res) => {
+  try {
+    const inquiryId = req.params.id;
+    const inquiry = await CustomerInquiry.findById(inquiryId);
+    if (!inquiry) {
+      return res.status(404).json({ message: 'Inquiry not found' });
+    }
+    res.json(inquiry);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.createInquiry = async (req, res) => {
   const inquiry = new CustomerInquiry({
     name: req.body.name,
