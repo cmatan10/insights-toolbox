@@ -1,14 +1,5 @@
 const Upload = require('../../models/Upload');
 
-exports.getAllUploads = async (req, res) => {
-  try {
-    const uploads = await Upload.find();
-    res.json(uploads);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
 exports.createUpload = async (req, res) => {
   const upload = new Upload({
     fileName: req.body.fileName,
@@ -24,29 +15,3 @@ exports.createUpload = async (req, res) => {
   }
 };
 
-exports.getUploadById = async (req, res) => {
-  try {
-    const uploadId = req.params.id;
-    const upload = await Upload.findById(uploadId);
-    if (!upload) {
-      return res.status(404).json({ message: 'Upload not found' });
-    }
-    res.json(upload);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-exports.deleteUpload = async (req, res) => {
-  try {
-    const uploadId = req.params.id;
-    const upload = await Upload.findById(uploadId);
-    if (!upload) {
-      return res.status(404).json({ message: 'Upload not found' });
-    }
-    await upload.remove();
-    res.json({ message: 'Upload deleted' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
