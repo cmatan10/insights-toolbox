@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const callHistoryController = require('../controllers/callHistoryController');
+const callHistory = require('../data/callHistory');
 
-router.get('/', callHistoryController.getAllCallHistories);
-router.post('/', callHistoryController.createCallHistory);
-router.get('/:id', callHistoryController.getCallHistoryById);
-router.delete('/:id', callHistoryController.deleteCallHistory);
+// Get all call histories
+router.get('/', (req, res) => {
+  res.json(callHistory);
+});
 
 module.exports = router;
