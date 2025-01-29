@@ -1,4 +1,4 @@
-const StatisticalData = require('../../models/StatisticalData');
+const StatisticalData = require('../models/StatisticalData');
 
 exports.getAllStatisticalData = async (req, res) => {
   try {

@@ -30,6 +30,7 @@ mongoose.connect('mongodb://localhost:27017/insights-toolbox', {
   console.log('Connected to MongoDB');
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
+    console.log('Server is up and running!'); // Add this line
   });
 }).catch((err) => {
   console.error('Failed to connect to MongoDB', err);

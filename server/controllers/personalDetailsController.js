@@ -1,4 +1,4 @@
-const PersonalDetails = require('../../models/PersonalDetails');
+const PersonalDetails = require('../models/PersonalDetails'); // Ensure this path is correct
 
 exports.getAllPersonalDetails = async (req, res) => {
   try {

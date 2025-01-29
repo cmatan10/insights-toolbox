@@ -1,4 +1,4 @@
-const CallHistory = require('../../models/CallHistory');
+const CallHistory = require('../models/CallHistory');
 
 exports.getAllCallHistories = async (req, res) => {
   try {
