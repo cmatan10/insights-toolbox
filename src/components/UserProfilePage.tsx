@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Pencil, ArrowRight, User, Upload, Linkedin, Instagram, Facebook, Twitter } from 'lucide-react';
+import { Pencil, ArrowRight, User, Upload, Linkedin, Instagram, Facebook, Twitter, Building2, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -19,10 +19,10 @@ interface ProfileData {
   profileImage: string;
   username: string;
   contactEmail: string;
-  contactPhone: number; // Changed to number
+  contactPhone: number;
   companyName: string;
   businessEmail: string;
-  businessPhone: number; // Changed to number
+  businessPhone: number;
   companyDescription: string;
   linkedin: string;
   instagram: string;
@@ -33,66 +33,43 @@ interface ProfileData {
 const UserProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
-
-  // המידע שמוצג בפועל כשלא בעריכה
   const [profile, setProfile] = useState<ProfileData>({
     profileImage: '',
-    username: 'משתמש לדוגמה',
+    username: 'Example User',
     contactEmail: 'user@example.com',
-    contactPhone: 501234567, // Changed to number
-    companyName: 'חברה לדוגמה',
+    contactPhone: 501234567,
+    companyName: 'Example Company',
     businessEmail: 'business@example.com',
-    businessPhone: 39876543, // Changed to number
-    companyDescription: 'חברה לדוגמה המתמחה בפתרונות תוכנה מתקדמים',
+    businessPhone: 39876543,
+    companyDescription: 'Example Company Specializing in Advanced Software Solutions',
     linkedin: 'https://linkedin.com/in/example',
     instagram: 'https://instagram.com/example',
     facebook: 'https://facebook.com/example',
     twitter: 'https://twitter.com/example'
   });
-
-  // המידע שהמשתמש מקליד בפועל בעת עריכה
   const [tempProfile, setTempProfile] = useState<ProfileData>({ ...profile });
 
-  // מעבר למצב עריכה: ננקה את הטפסים כדי שיהיו ריקים
   const handleStartEditing = () => {
-    setTempProfile({
-      profileImage: '',
-      username: '',
-      contactEmail: '',
-      contactPhone: 0, // Changed to number
-      companyName: '',
-      businessEmail: '',
-      businessPhone: 0, // Changed to number
-      companyDescription: '',
-      linkedin: '',
-      instagram: '',
-      facebook: '',
-      twitter: ''
-    });
+    setTempProfile({ ...profile });
     setIsEditing(true);
   };
 
-  // לחיצה על כפתור "שמור" תפתח את הפופאפ
   const handleSaveClick = () => {
     setShowSaveDialog(true);
   };
 
-  // אישור שמירה בפופאפ
   const confirmSave = () => {
-    // כאן נעדכן את ה־profile במה שהמשתמש הקליד
     setProfile(tempProfile);
     setShowSaveDialog(false);
     setIsEditing(false);
-    toast.success("השינויים נשמרו בהצלחה!");
+    toast.success("Changes saved successfully!");
   };
 
-  // טיפול בהעלאת תמונה (כאן הגיוני יותר לשמור ב־tempProfile אם רוצים שכאשר לא שומרים – לא יחליף)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // בזמן עריכה נעדכן את התמונה ב־tempProfile
         if (isEditing) {
           setTempProfile({ ...tempProfile, profileImage: reader.result as string });
         }
@@ -102,185 +79,173 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto text-right" dir="rtl">
-      {/* שורה עליונה עם כפתור "חזרה לדף הבית" וכפתורי "ערוך"/"שמור" */}
-      <div className="flex justify-between items-center mb-4">
-        <Button variant="ghost" onClick={() => window.location.href = '/' }>
-          <ArrowRight className="text-[#05baff]" /> חזרה לדף הבית
-        </Button>
-        {!isEditing ? (
-          <Button
-            style={{ backgroundColor: '#d1d5db', color: '#333' }}
-            onClick={handleStartEditing}
-          >
-            ערוך
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 p-4 md:p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-6">
+          <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-purple-600 hover:text-purple-700">
+            <ArrowRight className="mr-2 h-4 w-4" /> Back to Home
           </Button>
-        ) : (
           <Button
-            style={{ backgroundColor: '#05baff', color: '#fff' }}
-            onClick={handleSaveClick}
+            onClick={isEditing ? handleSaveClick : handleStartEditing}
+            className={`${isEditing ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-200 hover:bg-gray-300'} transition-colors`}
           >
-            שמור
+            {isEditing ? 'Save' : 'Edit'}
           </Button>
-        )}
-      </div>
-      
-      <Card className="shadow-lg rounded-2xl p-4 border border-gray-200">
-        <CardHeader className="flex flex-row-reverse justify-between items-center border-b pb-4">
-          {/* תמונת פרופיל */}
-          <div className="relative w-28 h-28 rounded-full border border-gray-300 overflow-hidden">
-            {/* הצגת תמונה אם לא בעריכה או שהעלינו קובץ חדש, אחרת נראה אייקון */}
-            {!isEditing ? (
-              profile.profileImage ? (
-                <img src={profile.profileImage} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <div className="flex items-center justify-center w-full h-full bg-gray-200">
-                  <User className="text-gray-500 w-12 h-12" />
-                </div>
-              )
-            ) : (
-              tempProfile.profileImage ? (
-                <img src={tempProfile.profileImage} alt="Profile" className="w-full h-full object-cover" />
-              ) : (
-                <div className="flex items-center justify-center w-full h-full bg-gray-200">
-                  <Upload className="text-gray-500 w-12 h-12" />
-                </div>
-              )
-            )}
-            {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-            )}
-          </div>
-          <h2 className="text-3xl font-bold text-black">פרופיל משתמש</h2>
-        </CardHeader>
+        </div>
 
-        <CardContent className="mt-6 space-y-8">
-          {/* פרטי איש קשר */}
-          <section>
-            <h3 className="text-xl font-semibold text-black mb-4">פרטי איש קשר</h3>
-            <div className="space-y-4">
-              {(['username', 'contactEmail', 'contactPhone'] as const).map((field) => (
-                <div key={field} className="flex items-center">
-                  <label htmlFor={field} className="w-40 text-right mr-4 text-sm font-medium text-gray-700">
-                    {field === 'username' 
-                      ? 'שם משתמש'
-                      : field === 'contactEmail'
-                        ? 'מייל איש קשר'
-                        : 'טלפון איש קשר'}
-                  </label>
-                  <div className="flex-1 relative">
-                    <Input
-                      id={field}
-                      type={field.includes('Phone') ? 'number' : 'text'} // Added type number for phone fields
-                      disabled={!isEditing}
-                      // placeholder בעת צפייה – הערך הישן
-                      placeholder={!isEditing ? profile[field].toString() : ""}
-                      // value בעת עריכה – מה שהמשתמש מקליד (tempProfile)
-                      // בעת צפייה – "" כדי לא להציג ערך כלל (רק placeholder)
-                      value={isEditing ? tempProfile[field].toString() : ""}
-                      onChange={(e) => setTempProfile({ ...tempProfile, [field]: field.includes('Phone') ? Number(e.target.value) : e.target.value })}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Profile Card */}
+          <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardContent className="p-6">
+              <div className="relative mx-auto w-32 h-32 mb-6">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-purple-200">
+                  {(isEditing ? tempProfile.profileImage : profile.profileImage) ? (
+                    <img
+                      src={isEditing ? tempProfile.profileImage : profile.profileImage}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
                     />
-                  </div>
-                  {isEditing && <Pencil className="ml-3 text-[#05baff]" />}
+                  ) : (
+                    <div className="w-full h-full bg-purple-100 flex items-center justify-center">
+                      <User className="w-12 h-12 text-purple-400" />
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          </section>
-
-          {/* פרטי העסק */}
-          <section>
-            <h3 className="text-xl font-semibold text-black mb-4">פרטי העסק</h3>
-            <div className="space-y-4">
-              {(['companyName', 'businessEmail', 'businessPhone', 'companyDescription'] as const).map((field) => (
-                <div key={field} className="flex items-center">
-                  <label htmlFor={field} className="w-40 text-right mr-4 text-sm font-medium text-gray-700">
-                    {field === 'companyName'
-                      ? 'שם חברה'
-                      : field === 'businessEmail'
-                        ? 'מייל עסקי'
-                        : field === 'businessPhone'
-                          ? 'טלפון עסקי'
-                          : 'תיאור חברה'}
+                {isEditing && (
+                  <label className="absolute bottom-0 right-0 p-2 bg-purple-600 rounded-full cursor-pointer hover:bg-purple-700 transition-colors">
+                    <Upload className="w-4 h-4 text-white" />
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
-                  <div className="flex-1 relative">
-                    {field === 'companyDescription' ? (
-                      <textarea
-                        id={field}
-                        disabled={!isEditing}
-                        placeholder={!isEditing ? profile[field] : ""}
-                        value={isEditing ? tempProfile[field] : ""}
-                        onChange={(e) => setTempProfile({ ...tempProfile, [field]: e.target.value })}
-                        className="w-full p-2 border rounded-md disabled:bg-gray-100"
-                        rows={4}
-                      />
-                    ) : (
-                      <Input
-                        id={field}
-                        type={field.includes('Phone') ? 'number' : 'text'} // Added type number for phone fields
-                        disabled={!isEditing}
-                        placeholder={!isEditing ? profile[field].toString() : ""}
-                        value={isEditing ? tempProfile[field].toString() : ""}
-                        onChange={(e) => setTempProfile({ ...tempProfile, [field]: field.includes('Phone') ? Number(e.target.value) : e.target.value })}
-                      />
-                    )}
-                  </div>
-                  {isEditing && <Pencil className="ml-3 text-[#05baff]" />}
+                )}
+              </div>
+
+              <div className="space-y-4 text-center">
+                <Input
+                  disabled={!isEditing}
+                  value={isEditing ? tempProfile.username : profile.username}
+                  onChange={(e) => setTempProfile({ ...tempProfile, username: e.target.value })}
+                  className="text-xl font-semibold text-center"
+                  placeholder="Username"
+                />
+                <div className="flex justify-center space-x-4">
+                  {[
+                    { icon: Linkedin, link: 'linkedin', color: 'text-blue-600' },
+                    { icon: Instagram, link: 'instagram', color: 'text-pink-600' },
+                    { icon: Facebook, link: 'facebook', color: 'text-blue-700' },
+                    { icon: Twitter, link: 'twitter', color: 'text-blue-400' },
+                  ].map(({ icon: Icon, link, color }) => (
+                    <a
+                      key={link}
+                      href={profile[link as keyof ProfileData]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${color} hover:opacity-75 transition-opacity`}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* רשתות חברתיות */}
-          <section>
-            <h3 className="text-xl font-semibold text-black mb-4">רשתות חברתיות</h3>
-            <div className="space-y-4">
-              {([
-                { field: 'linkedin',   label: 'לינקדאין', icon: <Linkedin className="text-[#0e76a8] ml-10" /> },
-                { field: 'instagram',  label: 'אינסטגרם', icon: <Instagram className="text-pink-500 ml-10" /> },
-                { field: 'facebook',   label: 'פייסבוק',  icon: <Facebook className="text-blue-600 ml-10" /> },
-                { field: 'twitter',    label: 'טוויטר',   icon: <Twitter className="text-blue-400 ml-10" /> },
-              ] as const).map(({ field, label, icon }) => (
-                <div key={field} className="flex items-center">
-                  <label htmlFor={field} className="w-40 text-right mr-4 text-sm font-medium text-gray-700">
-                    {label}
-                  </label>
-                  <div className="flex items-center flex-1">
-                    {icon}
-                    <div className="flex-1 relative">
+          {/* Details Cards */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Contact Information */}
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-purple-700">
+                  <Mail className="w-5 h-5 mr-2" /> Contact Information
+                </h3>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm text-gray-600 mb-1 block">Email</label>
                       <Input
-                        id={field}
                         disabled={!isEditing}
-                        placeholder={!isEditing ? profile[field] : ""}
-                        value={isEditing ? tempProfile[field] : ""}
-                        onChange={(e) => setTempProfile({ ...tempProfile, [field]: e.target.value })}
+                        value={isEditing ? tempProfile.contactEmail : profile.contactEmail}
+                        onChange={(e) => setTempProfile({ ...tempProfile, contactEmail: e.target.value })}
+                        placeholder="Contact Email"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-gray-600 mb-1 block">Phone</label>
+                      <Input
+                        type="number"
+                        disabled={!isEditing}
+                        value={isEditing ? tempProfile.contactPhone : profile.contactPhone}
+                        onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
+                        placeholder="Contact Phone"
                       />
                     </div>
                   </div>
-                  {isEditing && <Pencil className="ml-3 text-[#05baff]" />}
                 </div>
-              ))}
-            </div>
-          </section>
-        </CardContent>
-      </Card>
+              </CardContent>
+            </Card>
 
-      {/* AlertDialog לאישור שמירת השינויים */}
+            {/* Business Information */}
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-purple-700">
+                  <Building2 className="w-5 h-5 mr-2" /> Business Information
+                </h3>
+                <div className="space-y-4">
+                  <Input
+                    disabled={!isEditing}
+                    value={isEditing ? tempProfile.companyName : profile.companyName}
+                    onChange={(e) => setTempProfile({ ...tempProfile, companyName: e.target.value })}
+                    placeholder="Company Name"
+                    className="font-medium"
+                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-sm text-gray-600 mb-1 block">Business Email</label>
+                      <Input
+                        disabled={!isEditing}
+                        value={isEditing ? tempProfile.businessEmail : profile.businessEmail}
+                        onChange={(e) => setTempProfile({ ...tempProfile, businessEmail: e.target.value })}
+                        placeholder="Business Email"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-sm text-gray-600 mb-1 block">Business Phone</label>
+                      <Input
+                        type="number"
+                        disabled={!isEditing}
+                        value={isEditing ? tempProfile.businessPhone : profile.businessPhone}
+                        onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: Number(e.target.value) })}
+                        placeholder="Business Phone"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-600 mb-1 block">Company Description</label>
+                    <textarea
+                      disabled={!isEditing}
+                      value={isEditing ? tempProfile.companyDescription : profile.companyDescription}
+                      onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
+                      placeholder="Company Description"
+                      className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+
       <AlertDialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
-        <AlertDialogContent className="text-right" dir="rtl">
+        <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>האם אתה בטוח שברצונך לשמור את השינויים?</AlertDialogTitle>
+            <AlertDialogTitle>Are you sure you want to save these changes?</AlertDialogTitle>
             <AlertDialogDescription>
-              פעולה זו תשמור את כל השינויים שבוצעו בפרופיל.
+              This action will update your profile information.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-row-reverse gap-2">
-            <AlertDialogCancel>ביטול</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmSave}>שמור</AlertDialogAction>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmSave}>Save Changes</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
