@@ -37,12 +37,12 @@ const ConversationHistory: React.FC = () => {
   return (
     <div className="glass-card rounded-lg p-6 animate-fadeIn w-full" dir="rtl">
       <h2 className="text-xl font-semibold mb-4 text-right">היסטוריית שיחות</h2>
-      <ScrollArea className="h-[505px]">
+      <ScrollArea className="h-[396px]">
         <div className="space-y-7">
           {callHistory.map((conv) => (
             <div
               key={conv.id}
-              className="p-7 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              className="p-2 rounded-lg bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
               onClick={() => setOpenConversationId(conv.id)}
             >
               <div className="flex justify-between items-start mb-2">
