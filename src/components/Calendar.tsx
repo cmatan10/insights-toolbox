@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar as CalendarUI } from "@/components/ui/calendar";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon, Clock, Users } from "lucide-react"; // Import relevant icon
@@ -14,45 +14,27 @@ interface Meeting {
   participants: string[];
 }
 
-const meetings: Meeting[] = [
-  {
-    id: 1,
-    title: "פגישת צוות",
-    time: "10:00",
-    duration: "30 דקות",
-    date: new Date(),
-    participants: ['ישראל ישראלי', 'שרה כהן'],
-  },
-  {
-    id: 2,
-    title: "פגישת לקוח",
-    time: "14:00",
-    duration: "שעה",
-    date: addDays(new Date(), 1),
-    participants: ['יוסף לוי', 'שרון בלום'],
-  },
-  {
-    id: 3,
-    title: "סקירת פרויקט",
-    time: "16:30",
-    duration: "45 דקות",
-    date: addDays(new Date(), 2),
-    participants: ['דוד כהן', 'רונית לוי'],
-  },
-  {
-    id: 4,
-    title: "פגישת לקוח",
-    time: "15:00",
-    duration: "שעה",
-    date: addDays(new Date(), 2),
-    participants: ['מיכאל ישראלי', 'אורית כהן'],
-  },
-];
-
 const Calendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [selectedDayMeetings, setSelectedDayMeetings] = useState(meetings);
+  const [selectedDayMeetings, setSelectedDayMeetings] = useState<Meeting[]>([]);
   const [showAllMeetings, setShowAllMeetings] = useState(true);
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5001/api/meetings')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Fetched meetings:', data); // Debugging log
+        // Ensure the data is in the correct format
+        const formattedMeetings = data.map((meeting: Meeting) => ({
+          ...meeting,
+          date: new Date(meeting.date) // Convert date string to Date object
+        }));
+        setMeetings(formattedMeetings);
+        setSelectedDayMeetings(formattedMeetings); // Set initial meetings
+      })
+      .catch(error => console.error('Error fetching meetings:', error));
+  }, []);
 
   // לקבל את שם החודש הנוכחי בעברית
   const currentMonth = format(new Date(), "LLLL", { locale: he });
@@ -73,6 +55,7 @@ const Calendar = () => {
   const handleCalendarClick = () => {
     setShowAllMeetings(true);
     setSelectedDayMeetings(meetings);
+    console.log('All meetings:', meetings); // Debugging log
   };
 
   return (
