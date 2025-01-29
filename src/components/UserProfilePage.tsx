@@ -30,6 +30,7 @@ interface ProfileData {
   twitter: string;
 }
 
+
 const UserProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
