@@ -39,10 +39,10 @@ const UserProfilePage = () => {
     profileImage: '',
     username: 'משתמש לדוגמה',
     contactEmail: 'user@example.com',
-    contactPhone: 501234567, // Changed to number
+    contactPhone: 501234567,
     companyName: 'חברה לדוגמה',
     businessEmail: 'business@example.com',
-    businessPhone: 39876543, // Changed to number
+    businessPhone: 39876543,
     companyDescription: 'חברה לדוגמה המתמחה בפתרונות תוכנה מתקדמים',
     linkedin: 'https://linkedin.com/in/example',
     instagram: 'https://instagram.com/example',
@@ -53,16 +53,15 @@ const UserProfilePage = () => {
   // המידע שהמשתמש מקליד בפועל בעת עריכה
   const [tempProfile, setTempProfile] = useState<ProfileData>({ ...profile });
 
-  // מעבר למצב עריכה: ננקה את הטפסים כדי שיהיו ריקים
   const handleStartEditing = () => {
     setTempProfile({
       profileImage: '',
       username: '',
       contactEmail: '',
-      contactPhone: 0, // Changed to number
+      contactPhone: 0,
       companyName: '',
       businessEmail: '',
-      businessPhone: 0, // Changed to number
+      businessPhone: 0,
       companyDescription: '',
       linkedin: '',
       instagram: '',
@@ -72,27 +71,22 @@ const UserProfilePage = () => {
     setIsEditing(true);
   };
 
-  // לחיצה על כפתור "שמור" תפתח את הפופאפ
   const handleSaveClick = () => {
     setShowSaveDialog(true);
   };
 
-  // אישור שמירה בפופאפ
   const confirmSave = () => {
-    // כאן נעדכן את ה־profile במה שהמשתמש הקליד
     setProfile(tempProfile);
     setShowSaveDialog(false);
     setIsEditing(false);
     toast.success("השינויים נשמרו בהצלחה!");
   };
 
-  // טיפול בהעלאת תמונה (כאן הגיוני יותר לשמור ב־tempProfile אם רוצים שכאשר לא שומרים – לא יחליף)
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        // בזמן עריכה נעדכן את התמונה ב־tempProfile
         if (isEditing) {
           setTempProfile({ ...tempProfile, profileImage: reader.result as string });
         }
@@ -104,7 +98,6 @@ const UserProfilePage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#9b87f5]/10 to-[#7E69AB]/10 p-8" dir="rtl">
       <div className="max-w-4xl mx-auto">
-        {/* Header with navigation and edit/save buttons */}
         <div className="flex justify-between items-center mb-6">
           <Button 
             variant="ghost" 
