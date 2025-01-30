@@ -33,7 +33,7 @@ const Leads = () => {
     fetch('http://localhost:5001/api/customer-inquiries')
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched leads:', data); // Debugging log
+        console.log('Fetched leads:', data);
         setLeads(data);
       })
       .catch(error => console.error('Error fetching leads:', error));
@@ -54,54 +54,56 @@ const Leads = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-6 animate-fadeIn" dir="rtl">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">לידים</h2>
+    <div className="glass-card rounded-lg p-4 md:p-6 animate-fadeIn" dir="rtl">
+      <div className="flex justify-between items-center mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl font-semibold">לידים</h2>
       </div>
       
-      <ScrollArea className="h-[265px] rounded-md border">
-        <div className="relative">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[50px]"></TableHead>
-                <TableHead className="text-right">אימייל</TableHead>
-                <TableHead className="text-right">טלפון</TableHead>
-                <TableHead className="text-right">שם</TableHead>
-                <TableHead className="text-right">הודעה</TableHead>
-                <TableHead className="text-right">תאריך יצירת קשר</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {leads.length === 0 ? (
+      <div className="overflow-hidden">
+        <ScrollArea className="h-[265px] w-full rounded-md border">
+          <div className="min-w-[800px]">
+            <Table>
+              <TableHeader>
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">אין לידים להצגה</TableCell>
+                  <TableHead className="w-[50px]"></TableHead>
+                  <TableHead className="text-right">אימייל</TableHead>
+                  <TableHead className="text-right">טלפון</TableHead>
+                  <TableHead className="text-right">שם</TableHead>
+                  <TableHead className="text-right">הודעה</TableHead>
+                  <TableHead className="text-right">תאריך יצירת קשר</TableHead>
                 </TableRow>
-              ) : (
-                leads.map((lead) => (
-                  <TableRow key={lead.id}>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(lead.id)}
-                        className="hover:text-red-500"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </TableCell>
-                    <TableCell className="text-right">{lead.email}</TableCell>
-                    <TableCell className="text-right">{lead.phone}</TableCell>
-                    <TableCell className="text-right">{lead.name}</TableCell>
-                    <TableCell className="text-right">{lead.message}</TableCell>
-                    <TableCell className="text-right">{lead.contactDate}</TableCell>
+              </TableHeader>
+              <TableBody>
+                {leads.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center">אין לידים להצגה</TableCell>
                   </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </div>
-      </ScrollArea>
+                ) : (
+                  leads.map((lead) => (
+                    <TableRow key={lead.id}>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(lead.id)}
+                          className="hover:text-red-500"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                      <TableCell className="text-right">{lead.email}</TableCell>
+                      <TableCell className="text-right">{lead.phone}</TableCell>
+                      <TableCell className="text-right">{lead.name}</TableCell>
+                      <TableCell className="text-right max-w-[200px] truncate">{lead.message}</TableCell>
+                      <TableCell className="text-right">{lead.contactDate}</TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </ScrollArea>
+      </div>
 
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent className="text-right" dir="rtl">

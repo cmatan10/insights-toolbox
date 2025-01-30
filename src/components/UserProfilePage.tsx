@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Pencil, ArrowRight, User, Upload, Linkedin, Instagram, Facebook, Twitter, Building2, Mail, Phone } from 'lucide-react';
+import { ArrowRight, User, Upload, Linkedin, Instagram, Facebook, Twitter, Building2, Mail, Phone, Pencil } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   AlertDialog,
@@ -30,9 +30,22 @@ interface ProfileData {
   twitter: string;
 }
 
+interface SectionEditState {
+  profile: boolean;
+  contact: boolean;
+  business: boolean;
+  social: boolean;
+}
+
 const UserProfilePage = () => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [editSections, setEditSections] = useState<SectionEditState>({
+    profile: false,
+    contact: false,
+    business: false,
+    social: false
+  });
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [activeSection, setActiveSection] = useState<keyof SectionEditState | null>(null);
   const [profile, setProfile] = useState<ProfileData>({
     profileImage: '',
     username: 'Example User',
@@ -49,9 +62,10 @@ const UserProfilePage = () => {
   });
   const [tempProfile, setTempProfile] = useState<ProfileData>({ ...profile });
 
-  const handleStartEditing = () => {
+  const handleStartEditing = (section: keyof SectionEditState) => {
     setTempProfile({ ...profile });
-    setIsEditing(true);
+    setEditSections({ ...editSections, [section]: true });
+    setActiveSection(section);
   };
 
   const handleSaveClick = () => {
@@ -61,7 +75,13 @@ const UserProfilePage = () => {
   const confirmSave = () => {
     setProfile(tempProfile);
     setShowSaveDialog(false);
-    setIsEditing(false);
+    setEditSections({
+      profile: false,
+      contact: false,
+      business: false,
+      social: false
+    });
+    setActiveSection(null);
     toast.success("Changes saved successfully!");
   };
 
@@ -70,9 +90,7 @@ const UserProfilePage = () => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        if (isEditing) {
-          setTempProfile({ ...tempProfile, profileImage: reader.result as string });
-        }
+        setTempProfile({ ...tempProfile, profileImage: reader.result as string });
       };
       reader.readAsDataURL(file);
     }
@@ -85,23 +103,32 @@ const UserProfilePage = () => {
           <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-[#05baff] hover:text-[#05baff]">
             <ArrowRight className="mr-2 h-4 w-4" /> Back to Home
           </Button>
-          <Button
-            onClick={isEditing ? handleSaveClick : handleStartEditing}
-            className={`${isEditing ? 'bg-[#05baff] hover:bg-[#05baff]' : 'bg-gray-200 hover:bg-gray-300'} transition-colors`}
-          >
-            {isEditing ? 'Save' : 'Edit'}
-          </Button>
+          {activeSection && (
+            <Button onClick={handleSaveClick} className="bg-[#05baff] hover:bg-[#05baff]/90">
+              Save Changes
+            </Button>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Profile Card */}
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
+              <div className="flex justify-end">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleStartEditing('profile')}
+                  className="hover:bg-gray-100"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </div>
               <div className="relative mx-auto w-32 h-32 mb-6">
                 <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#05baff]">
-                  {(isEditing ? tempProfile.profileImage : profile.profileImage) ? (
+                  {(editSections.profile ? tempProfile.profileImage : profile.profileImage) ? (
                     <img
-                      src={isEditing ? tempProfile.profileImage : profile.profileImage}
+                      src={editSections.profile ? tempProfile.profileImage : profile.profileImage}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
@@ -111,40 +138,22 @@ const UserProfilePage = () => {
                     </div>
                   )}
                 </div>
-                {isEditing && (
-                  <label className="absolute bottom-0 right-0 p-2 bg-[#05baff] rounded-full cursor-pointer hover:bg-[#05baff] transition-colors">
+                {editSections.profile && (
+                  <label className="absolute bottom-0 right-0 p-2 bg-[#05baff] rounded-full cursor-pointer hover:bg-[#05baff]/90 transition-colors">
                     <Upload className="w-4 h-4 text-white" />
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
                 )}
               </div>
 
-              <div className="space-y-4 text-center">
+              <div className="space-y-4">
                 <Input
-                  disabled={!isEditing}
-                  value={isEditing ? tempProfile.username : profile.username}
+                  disabled={!editSections.profile}
+                  value={editSections.profile ? tempProfile.username : profile.username}
                   onChange={(e) => setTempProfile({ ...tempProfile, username: e.target.value })}
                   className="text-xl font-semibold text-center"
                   placeholder="Username"
                 />
-                <div className="flex justify-center space-x-4">
-                  {[
-                    { icon: Linkedin, link: 'linkedin', color: 'text-blue-600' },
-                    { icon: Instagram, link: 'instagram', color: 'text-pink-600' },
-                    { icon: Facebook, link: 'facebook', color: 'text-blue-700' },
-                    { icon: Twitter, link: 'twitter', color: 'text-blue-400' },
-                  ].map(({ icon: Icon, link, color }) => (
-                    <a
-                      key={link}
-                      href={String(profile[link as keyof ProfileData])}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${color} hover:opacity-75 transition-opacity`}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  ))}
-                </div>
               </div>
             </CardContent>
           </Card>
@@ -154,16 +163,26 @@ const UserProfilePage = () => {
             {/* Contact Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 flex items-center text-[#05baff]">
-                  <Mail className="w-5 h-5 mr-2" /> Contact Information
-                </h3>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                    <Mail className="w-5 h-5 mr-2" /> Contact Information
+                  </h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleStartEditing('contact')}
+                    className="hover:bg-gray-100"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                </div>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm text-gray-600 mb-1 block">Email</label>
                       <Input
-                        disabled={!isEditing}
-                        value={isEditing ? tempProfile.contactEmail : profile.contactEmail}
+                        disabled={!editSections.contact}
+                        value={editSections.contact ? tempProfile.contactEmail : profile.contactEmail}
                         onChange={(e) => setTempProfile({ ...tempProfile, contactEmail: e.target.value })}
                         placeholder="Contact Email"
                       />
@@ -172,8 +191,8 @@ const UserProfilePage = () => {
                       <label className="text-sm text-gray-600 mb-1 block">Phone</label>
                       <Input
                         type="number"
-                        disabled={!isEditing}
-                        value={isEditing ? tempProfile.contactPhone : profile.contactPhone}
+                        disabled={!editSections.contact}
+                        value={editSections.contact ? tempProfile.contactPhone : profile.contactPhone}
                         onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
                         placeholder="Contact Phone"
                       />
@@ -186,13 +205,23 @@ const UserProfilePage = () => {
             {/* Business Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 flex items-center text-[#05baff]">
-                  <Building2 className="w-5 h-5 mr-2" /> Business Information
-                </h3>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                    <Building2 className="w-5 h-5 mr-2" /> Business Information
+                  </h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleStartEditing('business')}
+                    className="hover:bg-gray-100"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                </div>
                 <div className="space-y-4">
                   <Input
-                    disabled={!isEditing}
-                    value={isEditing ? tempProfile.companyName : profile.companyName}
+                    disabled={!editSections.business}
+                    value={editSections.business ? tempProfile.companyName : profile.companyName}
                     onChange={(e) => setTempProfile({ ...tempProfile, companyName: e.target.value })}
                     placeholder="Company Name"
                     className="font-medium"
@@ -201,8 +230,8 @@ const UserProfilePage = () => {
                     <div>
                       <label className="text-sm text-gray-600 mb-1 block">Business Email</label>
                       <Input
-                        disabled={!isEditing}
-                        value={isEditing ? tempProfile.businessEmail : profile.businessEmail}
+                        disabled={!editSections.business}
+                        value={editSections.business ? tempProfile.businessEmail : profile.businessEmail}
                         onChange={(e) => setTempProfile({ ...tempProfile, businessEmail: e.target.value })}
                         placeholder="Business Email"
                       />
@@ -211,8 +240,8 @@ const UserProfilePage = () => {
                       <label className="text-sm text-gray-600 mb-1 block">Business Phone</label>
                       <Input
                         type="number"
-                        disabled={!isEditing}
-                        value={isEditing ? tempProfile.businessPhone : profile.businessPhone}
+                        disabled={!editSections.business}
+                        value={editSections.business ? tempProfile.businessPhone : profile.businessPhone}
                         onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: Number(e.target.value) })}
                         placeholder="Business Phone"
                       />
@@ -221,11 +250,74 @@ const UserProfilePage = () => {
                   <div>
                     <label className="text-sm text-gray-600 mb-1 block">Company Description</label>
                     <textarea
-                      disabled={!isEditing}
-                      value={isEditing ? tempProfile.companyDescription : profile.companyDescription}
+                      disabled={!editSections.business}
+                      value={editSections.business ? tempProfile.companyDescription : profile.companyDescription}
                       onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
                       placeholder="Company Description"
-                      className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#05baff]"
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Social Media Links */}
+            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardContent className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold text-[#05baff]">Social Media Links</h3>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleStartEditing('social')}
+                    className="hover:bg-gray-100"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
+                      <Linkedin className="w-4 h-4 text-blue-600" /> LinkedIn
+                    </label>
+                    <Input
+                      disabled={!editSections.social}
+                      value={editSections.social ? tempProfile.linkedin : profile.linkedin}
+                      onChange={(e) => setTempProfile({ ...tempProfile, linkedin: e.target.value })}
+                      placeholder="LinkedIn URL"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
+                      <Instagram className="w-4 h-4 text-pink-600" /> Instagram
+                    </label>
+                    <Input
+                      disabled={!editSections.social}
+                      value={editSections.social ? tempProfile.instagram : profile.instagram}
+                      onChange={(e) => setTempProfile({ ...tempProfile, instagram: e.target.value })}
+                      placeholder="Instagram URL"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
+                      <Facebook className="w-4 h-4 text-blue-700" /> Facebook
+                    </label>
+                    <Input
+                      disabled={!editSections.social}
+                      value={editSections.social ? tempProfile.facebook : profile.facebook}
+                      onChange={(e) => setTempProfile({ ...tempProfile, facebook: e.target.value })}
+                      placeholder="Facebook URL"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
+                      <Twitter className="w-4 h-4 text-blue-400" /> Twitter
+                    </label>
+                    <Input
+                      disabled={!editSections.social}
+                      value={editSections.social ? tempProfile.twitter : profile.twitter}
+                      onChange={(e) => setTempProfile({ ...tempProfile, twitter: e.target.value })}
+                      placeholder="Twitter URL"
                     />
                   </div>
                 </div>
