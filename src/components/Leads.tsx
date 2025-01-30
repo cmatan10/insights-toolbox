@@ -54,14 +54,14 @@ const Leads = () => {
   };
 
   return (
-    <div className="glass-card rounded-lg p-2 sm:p-4 md:p-6 animate-fadeIn" dir="rtl">
-      <div className="flex justify-between items-center mb-2 sm:mb-4 md:mb-6">
-        <h2 className="text-base sm:text-lg md:text-xl font-semibold">לידים</h2>
+    <div className="glass-card rounded-lg p-4 md:p-6 animate-fadeIn" dir="rtl">
+      <div className="flex justify-between items-center mb-4 md:mb-6">
+        <h2 className="text-lg md:text-xl font-semibold">לידים</h2>
       </div>
       
       <div className="overflow-hidden">
-        <ScrollArea className="h-[calc(100vh-200px)] w-full rounded-md border">
-          <div className="min-w-[640px] sm:min-w-[768px] lg:min-w-[800px]">
+        <ScrollArea className="h-[265px] w-full rounded-md border">
+          <div className="min-w-[800px]">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -69,8 +69,8 @@ const Leads = () => {
                   <TableHead className="text-right">אימייל</TableHead>
                   <TableHead className="text-right">טלפון</TableHead>
                   <TableHead className="text-right">שם</TableHead>
-                  <TableHead className="text-right hidden sm:table-cell">הודעה</TableHead>
-                  <TableHead className="text-right hidden md:table-cell">תאריך יצירת קשר</TableHead>
+                  <TableHead className="text-right">הודעה</TableHead>
+                  <TableHead className="text-right">תאריך יצירת קשר</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -91,13 +91,11 @@ const Leads = () => {
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </TableCell>
-                      <TableCell className="text-right max-w-[150px] truncate">{lead.email}</TableCell>
+                      <TableCell className="text-right">{lead.email}</TableCell>
                       <TableCell className="text-right">{lead.phone}</TableCell>
                       <TableCell className="text-right">{lead.name}</TableCell>
-                      <TableCell className="text-right hidden sm:table-cell max-w-[200px] truncate">
-                        {lead.message}
-                      </TableCell>
-                      <TableCell className="text-right hidden md:table-cell">{lead.contactDate}</TableCell>
+                      <TableCell className="text-right max-w-[200px] truncate">{lead.message}</TableCell>
+                      <TableCell className="text-right">{lead.contactDate}</TableCell>
                     </TableRow>
                   ))
                 )}
