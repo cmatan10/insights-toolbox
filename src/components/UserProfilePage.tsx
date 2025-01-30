@@ -114,7 +114,11 @@ const UserProfilePage = () => {
           {/* Profile Card */}
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
+
               <div className="flex justify-end">
+              <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                    <Mail className="w-5 h-5 mr-2" /> Contact Information
+                  </h3>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -155,30 +159,8 @@ const UserProfilePage = () => {
                   placeholder="Username"
                 />
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Details Cards */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Contact Information */}
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
-                    <Mail className="w-5 h-5 mr-2" /> Contact Information
-                  </h3>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleStartEditing('contact')}
-                    className="hover:bg-gray-100"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+              <div>
                       <label className="text-sm text-gray-600 mb-1 block">Email</label>
                       <Input
                         disabled={!editSections.contact}
@@ -197,11 +179,12 @@ const UserProfilePage = () => {
                         placeholder="Contact Phone"
                       />
                     </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
+
+
+      
+            </CardContent>
+          </Card>
             {/* Business Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
@@ -260,21 +243,28 @@ const UserProfilePage = () => {
                 </div>
               </CardContent>
             </Card>
-
-            {/* Social Media Links */}
+          {/* Details Cards */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Contact Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold text-[#05baff]">Social Media Links</h3>
+                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                    <Mail className="w-5 h-5 mr-2" />Social Media Links
+                  </h3>
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => handleStartEditing('social')}
+                    onClick={() => handleStartEditing('contact')}
                     className="hover:bg-gray-100"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
+                  
                 </div>
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
@@ -321,8 +311,12 @@ const UserProfilePage = () => {
                     />
                   </div>
                 </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
+
+
           </div>
         </div>
       </div>
