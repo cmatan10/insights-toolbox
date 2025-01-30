@@ -111,7 +111,7 @@ const UserProfilePage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Profile Card */}
+          {/* Unified Profile and Social Media Card */}
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
               <div className="flex justify-end">
@@ -154,6 +154,58 @@ const UserProfilePage = () => {
                   className="text-xl font-semibold text-center"
                   placeholder="Username"
                 />
+                
+                {/* Social Media Links */}
+                <div className="grid grid-cols-2 gap-4 mt-6">
+                  <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-600">
+                    <Linkedin className="w-5 h-5" />
+                    {editSections.profile ? (
+                      <Input
+                        value={tempProfile.linkedin}
+                        onChange={(e) => setTempProfile({ ...tempProfile, linkedin: e.target.value })}
+                        placeholder="LinkedIn URL"
+                      />
+                    ) : (
+                      <span>LinkedIn</span>
+                    )}
+                  </a>
+                  <a href={profile.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-pink-600">
+                    <Instagram className="w-5 h-5" />
+                    {editSections.profile ? (
+                      <Input
+                        value={tempProfile.instagram}
+                        onChange={(e) => setTempProfile({ ...tempProfile, instagram: e.target.value })}
+                        placeholder="Instagram URL"
+                      />
+                    ) : (
+                      <span>Instagram</span>
+                    )}
+                  </a>
+                  <a href={profile.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-700">
+                    <Facebook className="w-5 h-5" />
+                    {editSections.profile ? (
+                      <Input
+                        value={tempProfile.facebook}
+                        onChange={(e) => setTempProfile({ ...tempProfile, facebook: e.target.value })}
+                        placeholder="Facebook URL"
+                      />
+                    ) : (
+                      <span>Facebook</span>
+                    )}
+                  </a>
+                  <a href={profile.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-blue-400">
+                    <Twitter className="w-5 h-5" />
+                    {editSections.profile ? (
+                      <Input
+                        value={tempProfile.twitter}
+                        onChange={(e) => setTempProfile({ ...tempProfile, twitter: e.target.value })}
+                        placeholder="Twitter URL"
+                      />
+                    ) : (
+                      <span>Twitter</span>
+                    )}
+                  </a>
+                </div>
               </div>
             </CardContent>
           </Card>
