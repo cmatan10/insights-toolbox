@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -19,10 +19,10 @@ interface ProfileData {
   profileImage: string;
   username: string;
   contactEmail: string;
-  contactPhone: number;
+  contactPhone: string;
   companyName: string;
   businessEmail: string;
-  businessPhone: number;
+  businessPhone: string;
   companyDescription: string;
   linkedin: string;
   instagram: string;
@@ -48,19 +48,31 @@ const UserProfilePage = () => {
   const [activeSection, setActiveSection] = useState<keyof SectionEditState | null>(null);
   const [profile, setProfile] = useState<ProfileData>({
     profileImage: '',
-    username: 'Example User',
-    contactEmail: 'user@example.com',
-    contactPhone: 501234567,
-    companyName: 'Example Company',
-    businessEmail: 'business@example.com',
-    businessPhone: 39876543,
-    companyDescription: 'Example Company Specializing in Advanced Software Solutions',
-    linkedin: 'https://linkedin.com/in/example',
-    instagram: 'https://instagram.com/example',
-    facebook: 'https://facebook.com/example',
-    twitter: 'https://twitter.com/example'
+    username: '',
+    contactEmail: '',
+    contactPhone: '',
+    companyName: '',
+    businessEmail: '',
+    businessPhone: '',
+    companyDescription: '',
+    linkedin: '',
+    instagram: '',
+    facebook: '',
+    twitter: ''
   });
   const [tempProfile, setTempProfile] = useState<ProfileData>({ ...profile });
+
+  useEffect(() => {
+    fetch('http://localhost:5001/api/personal-details')
+      .then(response => response.json())
+      .then(data => {
+        setProfile(data[0]);
+        setTempProfile(data[0]);
+      })
+      .catch(error => {
+        console.error('Error fetching personal details:', error);
+      });
+  }, []);
 
   const handleStartEditing = (section: keyof SectionEditState) => {
     setTempProfile({ ...profile });
@@ -176,10 +188,10 @@ const UserProfilePage = () => {
                 <div>
                   <label className="text-sm text-gray-600 mb-1 block">טלפון</label>
                   <Input
-                    type="number"
+                    type="text"
                     disabled={!editSections.profile}
                     value={editSections.profile ? tempProfile.contactPhone : profile.contactPhone}
-                    onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
+                    onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: e.target.value })}
                     className="text-right"
                     placeholder="טלפון"
                   />
@@ -231,10 +243,10 @@ const UserProfilePage = () => {
                   <div>
                     <label className="text-sm text-gray-600 mb-1 block">טלפון עסקי</label>
                     <Input
-                      type="number"
+                      type="text"
                       disabled={!editSections.business}
                       value={editSections.business ? tempProfile.businessPhone : profile.businessPhone}
-                      onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: Number(e.target.value) })}
+                      onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: e.target.value })}
                       className="text-right"
                       placeholder="טלפון עסקי"
                     />

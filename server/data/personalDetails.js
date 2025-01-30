@@ -1,16 +1,16 @@
 module.exports = [
   {
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '123-456-7890',
-    address: '123 Main St, Anytown, USA'
+    profileImage: '',
+    username: 'Example User',
+    contactEmail: 'user@example.com',
+    contactPhone: '501234567',
+    companyName: 'Example Company',
+    businessEmail: 'business@example.com',
+    businessPhone: '39876543',
+    companyDescription: 'Example Company Specializing in Advanced Software Solutions',
+    linkedin: 'https://linkedin.com/in/example',
+    instagram: 'https://instagram.com/example',
+    facebook: 'https://facebook.com/example',
+    twitter: 'https://twitter.com/example'
   },
-  {
-    firstName: 'Jane',
-    lastName: 'Smith',
-    email: 'jane.smith@example.com',
-    phone: '987-654-3210',
-    address: '456 Elm St, Othertown, USA'
-  }
 ];

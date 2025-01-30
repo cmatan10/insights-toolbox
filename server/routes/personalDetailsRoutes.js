@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const personalDetailsController = require('../controllers/personalDetailsController'); // Ensure this path is correct
+const personalDetails = require('../data/personalDetails');
 
-router.get('/', personalDetailsController.getAllPersonalDetails);
-router.post('/', personalDetailsController.createPersonalDetails);
-router.get('/:id', personalDetailsController.getPersonalDetailsById);
-router.delete('/:id', personalDetailsController.deletePersonalDetails);
+// GET personal details
+router.get('/', (req, res) => {
+  res.json(personalDetails);
+});
 
 module.exports = router;

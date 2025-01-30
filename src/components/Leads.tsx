@@ -18,7 +18,7 @@ interface Lead {
   id: string;
   name: string;
   email: string;
-  phone: number;
+  phone: string;
   message: string;
   contactDate: string;
 }
@@ -52,7 +52,7 @@ const Leads = () => {
     }
   };
 
-  const formatPhoneNumber = (phone: number) => {
+  const formatPhoneNumber = (phone: string) => {
     const phoneStr = phone.toString();
     return `${phoneStr.slice(0, 3)}-${phoneStr.slice(3)}`;
   };
