@@ -79,15 +79,15 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-lightblue-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-purple-600 hover:text-purple-700">
+          <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-[#05baff] hover:text-[#05baff]">
             <ArrowRight className="mr-2 h-4 w-4" /> Back to Home
           </Button>
           <Button
             onClick={isEditing ? handleSaveClick : handleStartEditing}
-            className={`${isEditing ? 'bg-purple-600 hover:bg-purple-700' : 'bg-gray-200 hover:bg-gray-300'} transition-colors`}
+            className={`${isEditing ? 'bg-[#05baff] hover:bg-[#05baff]' : 'bg-gray-200 hover:bg-gray-300'} transition-colors`}
           >
             {isEditing ? 'Save' : 'Edit'}
           </Button>
@@ -98,7 +98,7 @@ const UserProfilePage = () => {
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
               <div className="relative mx-auto w-32 h-32 mb-6">
-                <div className="w-full h-full rounded-full overflow-hidden border-4 border-purple-200">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#05baff]">
                   {(isEditing ? tempProfile.profileImage : profile.profileImage) ? (
                     <img
                       src={isEditing ? tempProfile.profileImage : profile.profileImage}
@@ -106,13 +106,13 @@ const UserProfilePage = () => {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-purple-100 flex items-center justify-center">
-                      <User className="w-12 h-12 text-purple-400" />
+                    <div className="w-full h-full bg-blue-100 flex items-center justify-center">
+                      <User className="w-12 h-12 text-[#05baff]" />
                     </div>
                   )}
                 </div>
                 {isEditing && (
-                  <label className="absolute bottom-0 right-0 p-2 bg-purple-600 rounded-full cursor-pointer hover:bg-purple-700 transition-colors">
+                  <label className="absolute bottom-0 right-0 p-2 bg-[#05baff] rounded-full cursor-pointer hover:bg-[#05baff] transition-colors">
                     <Upload className="w-4 h-4 text-white" />
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                   </label>
@@ -136,7 +136,7 @@ const UserProfilePage = () => {
                   ].map(({ icon: Icon, link, color }) => (
                     <a
                       key={link}
-                      href={profile[link as keyof ProfileData]}
+                      href={String(profile[link as keyof ProfileData])}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={`${color} hover:opacity-75 transition-opacity`}
@@ -154,7 +154,7 @@ const UserProfilePage = () => {
             {/* Contact Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 flex items-center text-purple-700">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-[#05baff]">
                   <Mail className="w-5 h-5 mr-2" /> Contact Information
                 </h3>
                 <div className="space-y-4">
@@ -186,7 +186,7 @@ const UserProfilePage = () => {
             {/* Business Information */}
             <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
               <CardContent className="p-6">
-                <h3 className="text-xl font-semibold mb-4 flex items-center text-purple-700">
+                <h3 className="text-xl font-semibold mb-4 flex items-center text-[#05baff]">
                   <Building2 className="w-5 h-5 mr-2" /> Business Information
                 </h3>
                 <div className="space-y-4">
