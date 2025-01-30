@@ -97,28 +97,27 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-lightblue-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-lightblue-50 p-4 md:p-8" dir="rtl">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <Button variant="ghost" onClick={() => window.location.href = '/'} className="text-[#05baff] hover:text-[#05baff]">
-            <ArrowRight className="mr-2 h-4 w-4" /> Back to Home
+            <ArrowRight className="mr-2 h-4 w-4" /> חזרה לדף הבית
           </Button>
           {activeSection && (
             <Button onClick={handleSaveClick} className="bg-[#05baff] hover:bg-[#05baff]/90">
-              Save Changes
+              שמור שינויים
             </Button>
           )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Profile Card */}
+          {/* Profile and Social Media Card */}
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
-
-              <div className="flex justify-end">
-              <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
-                    <Mail className="w-5 h-5 mr-2" /> Contact Information
-                  </h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                  <User className="w-5 h-5 ml-2" /> פרטים אישיים
+                </h3>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -128,12 +127,13 @@ const UserProfilePage = () => {
                   <Pencil className="h-4 w-4" />
                 </Button>
               </div>
+
               <div className="relative mx-auto w-32 h-32 mb-6">
                 <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#05baff]">
                   {(editSections.profile ? tempProfile.profileImage : profile.profileImage) ? (
                     <img
                       src={editSections.profile ? tempProfile.profileImage : profile.profileImage}
-                      alt="Profile"
+                      alt="תמונת פרופיל"
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -151,187 +151,141 @@ const UserProfilePage = () => {
               </div>
 
               <div className="space-y-4">
-                <Input
-                  disabled={!editSections.profile}
-                  value={editSections.profile ? tempProfile.username : profile.username}
-                  onChange={(e) => setTempProfile({ ...tempProfile, username: e.target.value })}
-                  className="text-xl font-semibold text-center"
-                  placeholder="Username"
-                />
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block">שם משתמש</label>
+                  <Input
+                    disabled={!editSections.profile}
+                    value={editSections.profile ? tempProfile.username : profile.username}
+                    onChange={(e) => setTempProfile({ ...tempProfile, username: e.target.value })}
+                    className="text-right"
+                    placeholder="שם משתמש"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block">דוא״ל</label>
+                  <Input
+                    disabled={!editSections.contact}
+                    value={editSections.contact ? tempProfile.contactEmail : profile.contactEmail}
+                    onChange={(e) => setTempProfile({ ...tempProfile, contactEmail: e.target.value })}
+                    className="text-right"
+                    placeholder="דוא״ל"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block">טלפון</label>
+                  <Input
+                    type="number"
+                    disabled={!editSections.contact}
+                    value={editSections.contact ? tempProfile.contactPhone : profile.contactPhone}
+                    onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
+                    className="text-right"
+                    placeholder="טלפון"
+                  />
+                </div>
+
+                <div className="space-y-3 mt-6">
+                  <h4 className="font-semibold text-gray-700">רשתות חברתיות</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-600">
+                      <Linkedin className="w-5 h-5 ml-2" /> LinkedIn
+                    </a>
+                    <a href={profile.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center text-pink-600">
+                      <Instagram className="w-5 h-5 ml-2" /> Instagram
+                    </a>
+                    <a href={profile.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-700">
+                      <Facebook className="w-5 h-5 ml-2" /> Facebook
+                    </a>
+                    <a href={profile.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-400">
+                      <Twitter className="w-5 h-5 ml-2" /> Twitter
+                    </a>
+                  </div>
+                </div>
               </div>
-
-              <div>
-                      <label className="text-sm text-gray-600 mb-1 block">Email</label>
-                      <Input
-                        disabled={!editSections.contact}
-                        value={editSections.contact ? tempProfile.contactEmail : profile.contactEmail}
-                        onChange={(e) => setTempProfile({ ...tempProfile, contactEmail: e.target.value })}
-                        placeholder="Contact Email"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600 mb-1 block">Phone</label>
-                      <Input
-                        type="number"
-                        disabled={!editSections.contact}
-                        value={editSections.contact ? tempProfile.contactPhone : profile.contactPhone}
-                        onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
-                        placeholder="Contact Phone"
-                      />
-                    </div>
-
-
-
-      
             </CardContent>
           </Card>
-            {/* Business Information */}
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
-                    <Building2 className="w-5 h-5 mr-2" /> Business Information
-                  </h3>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleStartEditing('business')}
-                    className="hover:bg-gray-100"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="space-y-4">
+
+          {/* Business Information */}
+          <Card className="lg:col-span-2 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
+                  <Building2 className="w-5 h-5 ml-2" /> פרטי העסק
+                </h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleStartEditing('business')}
+                  className="hover:bg-gray-100"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block">שם החברה</label>
                   <Input
                     disabled={!editSections.business}
                     value={editSections.business ? tempProfile.companyName : profile.companyName}
                     onChange={(e) => setTempProfile({ ...tempProfile, companyName: e.target.value })}
-                    placeholder="Company Name"
-                    className="font-medium"
+                    className="text-right font-medium"
+                    placeholder="שם החברה"
                   />
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm text-gray-600 mb-1 block">Business Email</label>
-                      <Input
-                        disabled={!editSections.business}
-                        value={editSections.business ? tempProfile.businessEmail : profile.businessEmail}
-                        onChange={(e) => setTempProfile({ ...tempProfile, businessEmail: e.target.value })}
-                        placeholder="Business Email"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm text-gray-600 mb-1 block">Business Phone</label>
-                      <Input
-                        type="number"
-                        disabled={!editSections.business}
-                        value={editSections.business ? tempProfile.businessPhone : profile.businessPhone}
-                        onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: Number(e.target.value) })}
-                        placeholder="Business Phone"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-600 mb-1 block">Company Description</label>
-                    <textarea
-                      disabled={!editSections.business}
-                      value={editSections.business ? tempProfile.companyDescription : profile.companyDescription}
-                      onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
-                      placeholder="Company Description"
-                      className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#05baff]"
-                    />
-                  </div>
                 </div>
-              </CardContent>
-            </Card>
-          {/* Details Cards */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Contact Information */}
-            <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-xl font-semibold flex items-center text-[#05baff]">
-                    <Mail className="w-5 h-5 mr-2" />Social Media Links
-                  </h3>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleStartEditing('contact')}
-                    className="hover:bg-gray-100"
-                  >
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  
-                </div>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
-                      <Linkedin className="w-4 h-4 text-blue-600" /> LinkedIn
-                    </label>
+                    <label className="text-sm text-gray-600 mb-1 block">דוא״ל עסקי</label>
                     <Input
-                      disabled={!editSections.social}
-                      value={editSections.social ? tempProfile.linkedin : profile.linkedin}
-                      onChange={(e) => setTempProfile({ ...tempProfile, linkedin: e.target.value })}
-                      placeholder="LinkedIn URL"
+                      disabled={!editSections.business}
+                      value={editSections.business ? tempProfile.businessEmail : profile.businessEmail}
+                      onChange={(e) => setTempProfile({ ...tempProfile, businessEmail: e.target.value })}
+                      className="text-right"
+                      placeholder="דוא״ל עסקי"
                     />
                   </div>
                   <div>
-                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
-                      <Instagram className="w-4 h-4 text-pink-600" /> Instagram
-                    </label>
+                    <label className="text-sm text-gray-600 mb-1 block">טלפון עסקי</label>
                     <Input
-                      disabled={!editSections.social}
-                      value={editSections.social ? tempProfile.instagram : profile.instagram}
-                      onChange={(e) => setTempProfile({ ...tempProfile, instagram: e.target.value })}
-                      placeholder="Instagram URL"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
-                      <Facebook className="w-4 h-4 text-blue-700" /> Facebook
-                    </label>
-                    <Input
-                      disabled={!editSections.social}
-                      value={editSections.social ? tempProfile.facebook : profile.facebook}
-                      onChange={(e) => setTempProfile({ ...tempProfile, facebook: e.target.value })}
-                      placeholder="Facebook URL"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm text-gray-600 mb-1 flex items-center gap-2">
-                      <Twitter className="w-4 h-4 text-blue-400" /> Twitter
-                    </label>
-                    <Input
-                      disabled={!editSections.social}
-                      value={editSections.social ? tempProfile.twitter : profile.twitter}
-                      onChange={(e) => setTempProfile({ ...tempProfile, twitter: e.target.value })}
-                      placeholder="Twitter URL"
+                      type="number"
+                      disabled={!editSections.business}
+                      value={editSections.business ? tempProfile.businessPhone : profile.businessPhone}
+                      onChange={(e) => setTempProfile({ ...tempProfile, businessPhone: Number(e.target.value) })}
+                      className="text-right"
+                      placeholder="טלפון עסקי"
                     />
                   </div>
                 </div>
-                  </div>
+
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block">תיאור החברה</label>
+                  <textarea
+                    disabled={!editSections.business}
+                    value={editSections.business ? tempProfile.companyDescription : profile.companyDescription}
+                    onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
+                    placeholder="תיאור החברה"
+                    className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#05baff] text-right"
+                  />
                 </div>
-              </CardContent>
-            </Card>
-
-
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
       <AlertDialog open={showSaveDialog} onOpenChange={setShowSaveDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to save these changes?</AlertDialogTitle>
+            <AlertDialogTitle>האם אתה בטוח שברצונך לשמור את השינויים?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action will update your profile information.
+              פעולה זו תעדכן את פרטי הפרופיל שלך.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmSave}>Save Changes</AlertDialogAction>
+            <AlertDialogCancel>ביטול</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmSave}>שמור שינויים</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
