@@ -5,7 +5,7 @@ const personalDetailsController = require('../controllers/personalDetailsControl
 // GET personal details
 router.get('/', personalDetailsController.getAllPersonalDetails);
 
-// PUT personal details
-router.put('/', personalDetailsController.updatePersonalDetails);
+// POST personal details
+router.post('/', personalDetailsController.updatePersonalDetails);
 
 module.exports = router;

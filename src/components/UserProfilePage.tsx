@@ -14,6 +14,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import axios from 'axios';
 
 interface ProfileData {
   profileImage: string;
@@ -85,16 +86,23 @@ const UserProfilePage = () => {
   };
 
   const confirmSave = () => {
-    setProfile(tempProfile);
-    setShowSaveDialog(false);
-    setEditSections({
-      profile: false,
-      contact: false,
-      business: false,
-      social: false
-    });
-    setActiveSection(null);
-    toast.success("השינויים נשמרו בהצלחה!");
+    axios.post('http://localhost:5001/api/personal-details', tempProfile)
+      .then(response => {
+        setProfile(tempProfile);
+        setShowSaveDialog(false);
+        setEditSections({
+          profile: false,
+          contact: false,
+          business: false,
+          social: false
+        });
+        setActiveSection(null);
+        toast.success("השינויים נשמרו בהצלחה!");
+      })
+      .catch(error => {
+        console.error('Error saving personal details:', error);
+        toast.error("שגיאה בשמירת השינויים.");
+      });
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
