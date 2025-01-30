@@ -82,7 +82,7 @@ const UserProfilePage = () => {
       social: false
     });
     setActiveSection(null);
-    toast.success("Changes saved successfully!");
+    toast.success("השינויים נשמרו בהצלחה!");
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,7 +111,7 @@ const UserProfilePage = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Profile and Social Media Card */}
+          {/* Profile Card */}
           <Card className="lg:col-span-1 shadow-lg hover:shadow-xl transition-shadow duration-300">
             <CardContent className="p-6">
               <div className="flex justify-between items-center mb-4">
@@ -165,8 +165,8 @@ const UserProfilePage = () => {
                 <div>
                   <label className="text-sm text-gray-600 mb-1 block">דוא״ל</label>
                   <Input
-                    disabled={!editSections.contact}
-                    value={editSections.contact ? tempProfile.contactEmail : profile.contactEmail}
+                    disabled={!editSections.profile}
+                    value={editSections.profile ? tempProfile.contactEmail : profile.contactEmail}
                     onChange={(e) => setTempProfile({ ...tempProfile, contactEmail: e.target.value })}
                     className="text-right"
                     placeholder="דוא״ל"
@@ -177,30 +177,12 @@ const UserProfilePage = () => {
                   <label className="text-sm text-gray-600 mb-1 block">טלפון</label>
                   <Input
                     type="number"
-                    disabled={!editSections.contact}
-                    value={editSections.contact ? tempProfile.contactPhone : profile.contactPhone}
+                    disabled={!editSections.profile}
+                    value={editSections.profile ? tempProfile.contactPhone : profile.contactPhone}
                     onChange={(e) => setTempProfile({ ...tempProfile, contactPhone: Number(e.target.value) })}
                     className="text-right"
                     placeholder="טלפון"
                   />
-                </div>
-
-                <div className="space-y-3 mt-6">
-                  <h4 className="font-semibold text-gray-700">רשתות חברתיות</h4>
-                  <div className="grid grid-cols-2 gap-4">
-                    <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-600">
-                      <Linkedin className="w-5 h-5 ml-2" /> LinkedIn
-                    </a>
-                    <a href={profile.instagram} target="_blank" rel="noopener noreferrer" className="flex items-center text-pink-600">
-                      <Instagram className="w-5 h-5 ml-2" /> Instagram
-                    </a>
-                    <a href={profile.facebook} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-700">
-                      <Facebook className="w-5 h-5 ml-2" /> Facebook
-                    </a>
-                    <a href={profile.twitter} target="_blank" rel="noopener noreferrer" className="flex items-center text-blue-400">
-                      <Twitter className="w-5 h-5 ml-2" /> Twitter
-                    </a>
-                  </div>
                 </div>
               </div>
             </CardContent>
@@ -267,6 +249,77 @@ const UserProfilePage = () => {
                     onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
                     placeholder="תיאור החברה"
                     className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#05baff] text-right"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Social Media Panel */}
+          <Card className="lg:col-span-3 shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-[#05baff]">רשתות חברתיות</h3>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => handleStartEditing('social')}
+                  className="hover:bg-gray-100"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block flex items-center">
+                    <Linkedin className="w-5 h-5 ml-2" /> LinkedIn
+                  </label>
+                  <Input
+                    disabled={!editSections.social}
+                    value={editSections.social ? tempProfile.linkedin : profile.linkedin}
+                    onChange={(e) => setTempProfile({ ...tempProfile, linkedin: e.target.value })}
+                    className="text-right"
+                    placeholder="קישור ל-LinkedIn"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block flex items-center">
+                    <Instagram className="w-5 h-5 ml-2" /> Instagram
+                  </label>
+                  <Input
+                    disabled={!editSections.social}
+                    value={editSections.social ? tempProfile.instagram : profile.instagram}
+                    onChange={(e) => setTempProfile({ ...tempProfile, instagram: e.target.value })}
+                    className="text-right"
+                    placeholder="קישור ל-Instagram"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block flex items-center">
+                    <Facebook className="w-5 h-5 ml-2" /> Facebook
+                  </label>
+                  <Input
+                    disabled={!editSections.social}
+                    value={editSections.social ? tempProfile.facebook : profile.facebook}
+                    onChange={(e) => setTempProfile({ ...tempProfile, facebook: e.target.value })}
+                    className="text-right"
+                    placeholder="קישור ל-Facebook"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-sm text-gray-600 mb-1 block flex items-center">
+                    <Twitter className="w-5 h-5 ml-2" /> Twitter
+                  </label>
+                  <Input
+                    disabled={!editSections.social}
+                    value={editSections.social ? tempProfile.twitter : profile.twitter}
+                    onChange={(e) => setTempProfile({ ...tempProfile, twitter: e.target.value })}
+                    className="text-right"
+                    placeholder="קישור ל-Twitter"
                   />
                 </div>
               </div>
