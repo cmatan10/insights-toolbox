@@ -63,7 +63,7 @@ const Leads = () => {
         <h2 className="text-lg md:text-xl font-semibold text-primary">לידים</h2>
       </div>
       
-      <ScrollArea className="h-[600px] w-full rounded-md">
+      <ScrollArea className="h-[200px] w-full rounded-md">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-1">
           {leads.length === 0 ? (
             <div className="col-span-full text-center py-8 text-gray-500">

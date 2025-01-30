@@ -248,7 +248,7 @@ const UserProfilePage = () => {
                     value={editSections.business ? tempProfile.companyDescription : profile.companyDescription}
                     onChange={(e) => setTempProfile({ ...tempProfile, companyDescription: e.target.value })}
                     placeholder="תיאור החברה"
-                    className="w-full p-2 border rounded-md min-h-[100px] focus:outline-none focus:ring-2 focus:ring-[#05baff] text-right"
+                    className="w-full p-2 border rounded-md min-h-[187px] focus:outline-none focus:ring-2 focus:ring-[#05baff] text-right"
                   />
                 </div>
               </div>
